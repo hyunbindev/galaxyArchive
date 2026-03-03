@@ -18,7 +18,14 @@ class OAuth2UserService(
 
         val userPrincipal = OAuth2UserPrincipalImpl.of(registrationId, oAuth2User)
 
-        userService.signup(userPrincipal.toUserDto())
+        val isUser = userService.isUser(userPrincipal.provider,userPrincipal.providerId)
+
+        if(isUser){
+            userService.signup(userPrincipal.toUserDto())
+        }else{
+            userService.update(userPrincipal.toUserDto())
+        }
+
 
         return userPrincipal;
     }

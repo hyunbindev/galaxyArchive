@@ -53,6 +53,9 @@ class UserEntity(
     @Column(nullable = false, updatable = false)
     var createdAt: LocalDateTime = LocalDateTime.now()
 
+    @Column(nullable = false)
+    var lastLoginAt: LocalDateTime? = LocalDateTime.now()
+
     companion object{
         fun from(userInfoDto: UserInfoDto):UserEntity{
             return UserEntity(
