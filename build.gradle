@@ -36,6 +36,9 @@ subprojects {
 
     // 3. 모든 서브모듈 공통 의존성
     dependencies {
+
+        implementation 'org.springframework:spring-web'
+
         implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
         implementation 'org.jetbrains.kotlin:kotlin-reflect'
 

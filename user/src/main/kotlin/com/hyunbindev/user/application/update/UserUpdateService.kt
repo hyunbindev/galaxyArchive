@@ -2,6 +2,8 @@ package com.hyunbindev.user.application.update
 
 import com.hyunbindev.user.data.UserInfoDto
 import com.hyunbindev.user.entity.UserEntity
+import com.hyunbindev.user.exception.UserException
+import com.hyunbindev.user.exception.constant.UserExceptionCode
 import com.hyunbindev.user.repository.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -13,11 +15,11 @@ class UserUpdateService(
 ) {
     @Transactional
     fun update(userInfoDto: UserInfoDto) {
-        val provider = requireNotNull(userInfoDto.oAuth2Provider) { "Provider must not be null" }
-        val providerId = requireNotNull(userInfoDto.providerId) { "Provider ID must not be null" }
+        val provider = requireNotNull(userInfoDto.oAuth2Provider) { throw UserException(UserExceptionCode.USER_INTERNAL_ERROR) }
+        val providerId = requireNotNull(userInfoDto.providerId) { throw UserException(UserExceptionCode.USER_INTERNAL_ERROR) }
 
         val user:UserEntity = userRepository.findByOAuth2ProviderAndProviderId(provider, providerId)
-            ?:throw RuntimeException("not user");
+            ?:throw UserException(UserExceptionCode.USER_NOT_FOUND);
 
         user.lastLoginAt = LocalDateTime.now()
 
