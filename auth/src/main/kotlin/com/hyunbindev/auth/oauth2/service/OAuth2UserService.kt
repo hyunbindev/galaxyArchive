@@ -21,11 +21,10 @@ class OAuth2UserService(
         val isUser = userApplication.isUser(userPrincipal.provider,userPrincipal.providerId)
 
         if(isUser){
-            userApplication.update(userPrincipal.toUserDto())
+            userPrincipal.userId = userApplication.update(userPrincipal.toUserDto()).id
         }else{
-            userApplication.signup(userPrincipal.toUserDto())
+            userPrincipal.userId = userApplication.signup(userPrincipal.toUserDto()).id
         }
-
 
         return userPrincipal;
     }

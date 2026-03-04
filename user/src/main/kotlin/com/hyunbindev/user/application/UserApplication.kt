@@ -4,7 +4,7 @@ import com.hyunbindev.common.constant.oauth2.OAuth2Provider
 import com.hyunbindev.user.data.UserInfoDto
 
 interface UserApplication {
-    fun signup(userInfoDto: UserInfoDto)
-    fun update(userInfoDto: UserInfoDto)
+    fun signup(userInfoDto: UserInfoDto):UserInfoDto
+    fun update(userInfoDto: UserInfoDto):UserInfoDto
     fun isUser(oAuth2Provider: OAuth2Provider, providerId:String):Boolean
 }

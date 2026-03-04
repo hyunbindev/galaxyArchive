@@ -14,7 +14,7 @@ class UserUpdateService(
     private val userRepository: UserRepository,
 ) {
     @Transactional
-    fun update(userInfoDto: UserInfoDto) {
+    fun update(userInfoDto: UserInfoDto): UserInfoDto {
         val provider = requireNotNull(userInfoDto.oAuth2Provider) { throw UserException(UserExceptionCode.USER_INTERNAL_ERROR) }
         val providerId = requireNotNull(userInfoDto.providerId) { throw UserException(UserExceptionCode.USER_INTERNAL_ERROR) }
 
@@ -26,5 +26,7 @@ class UserUpdateService(
         userInfoDto.nickName?.let { user.nickName = it }
         userInfoDto.profileImageUrl?.let { user.profileImageUrl = it }
         userInfoDto.email?.let { user.email = it }
+
+        return UserInfoDto.from(user)
     }
 }

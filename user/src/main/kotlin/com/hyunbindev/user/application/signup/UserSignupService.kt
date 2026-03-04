@@ -12,8 +12,9 @@ internal class UserSignupService(
     private val userRepository: UserRepository,
 ) {
     @Transactional
-    fun signup(userInfoDto: UserInfoDto) {
+    fun signup(userInfoDto: UserInfoDto): UserInfoDto {
         val userEntity: UserEntity = UserEntity.from(userInfoDto)
         userRepository.save(userEntity)
+        return UserInfoDto.from(userEntity)
     }
 }

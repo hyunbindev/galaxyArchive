@@ -5,6 +5,7 @@ import com.hyunbindev.common.constant.oauth2.OAuth2Provider.*
 import com.hyunbindev.user.data.UserInfoDto
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.oauth2.core.user.OAuth2User
+import java.util.UUID
 
 /**
  * OAuth2 인증을 통해 로드된 사용자 정보를 담는 [OAuth2User] 및 [OAuth2UserPrincipal]의 구현체.
@@ -21,6 +22,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User
  * @property authorities 사용자에게 부여된 권한 목록
  */
 class OAuth2UserPrincipalImpl(
+    override var userId: UUID? = null,
     override val providerId: String,
     override val nickname: String,
     override val profileImageUrl: String?,
@@ -44,7 +46,7 @@ class OAuth2UserPrincipalImpl(
      * Spring Security의 Principal 식별자로 [providerId]를 반환합니다.
      * * @return 중복되지 않는 소셜 고유 ID
      */
-    override fun getName(): String = providerId
+    override fun getName(): String = userId.toString()
 
 
     override fun toUserDto(): UserInfoDto{

@@ -14,15 +14,9 @@ internal class UserApplicationImpl(
 
     private val userRepository: UserRepository,
 ) : UserApplication {
-    override fun signup(userInfoDto: UserInfoDto) {
-        userSignupService.signup(userInfoDto)
-    }
+    override fun signup(userInfoDto: UserInfoDto) = userSignupService.signup(userInfoDto)
 
-    override fun update(userInfoDto: UserInfoDto) {
-        userUpdateService.update(userInfoDto)
-    }
+    override fun update(userInfoDto: UserInfoDto) = userUpdateService.update(userInfoDto)
 
-    override fun isUser(oAuth2Provider: OAuth2Provider, providerId:String):Boolean {
-        return userRepository.existsByOAuth2ProviderAndProviderId(oAuth2Provider,providerId)
-    }
+    override fun isUser(oAuth2Provider: OAuth2Provider, providerId:String) = userRepository.existsByOAuth2ProviderAndProviderId(oAuth2Provider,providerId)
 }
