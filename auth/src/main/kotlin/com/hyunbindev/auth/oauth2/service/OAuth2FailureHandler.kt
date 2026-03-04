@@ -1,4 +1,4 @@
-package com.hyunbindev.auth.configuration.oauth2.service
+package com.hyunbindev.auth.oauth2.service
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

@@ -1,6 +1,6 @@
-package com.hyunbindev.auth.configuration.oauth2.service
+package com.hyunbindev.auth.oauth2.service
 
-import com.hyunbindev.auth.configuration.oauth2.model.OAuth2UserPrincipalImpl
+import com.hyunbindev.auth.oauth2.model.OAuth2UserPrincipalImpl
 import com.hyunbindev.user.application.UserApplication
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest

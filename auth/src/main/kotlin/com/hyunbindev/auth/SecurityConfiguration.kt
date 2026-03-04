@@ -1,8 +1,7 @@
-package com.hyunbindev.auth.configuration
+package com.hyunbindev.auth
 
-import com.hyunbindev.auth.configuration.oauth2.service.OAuth2SuccessService
-import com.hyunbindev.auth.configuration.oauth2.service.OAuth2UserService
-import org.slf4j.LoggerFactory
+import com.hyunbindev.auth.oauth2.service.OAuth2SuccessService
+import com.hyunbindev.auth.oauth2.service.OAuth2UserService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -32,6 +31,7 @@ class SecurityConfiguration(
                 oauth
                     .userInfoEndpoint { it.userService(oAuth2UserService) }
                     .successHandler(oAuth2SuccessService)
+                    .failureUrl("/oauth2/error")
             }
         return http.build();
     }

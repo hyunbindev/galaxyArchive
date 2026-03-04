@@ -1,4 +1,4 @@
-package com.hyunbindev.auth.configuration.oauth2.model
+package com.hyunbindev.auth.oauth2.model
 
 import com.hyunbindev.common.constant.oauth2.OAuth2Provider
 import com.hyunbindev.user.data.UserInfoDto

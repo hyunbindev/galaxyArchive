@@ -1,11 +1,10 @@
-package com.hyunbindev.auth.configuration.oauth2.model
+package com.hyunbindev.auth.oauth2.model
 
 import com.hyunbindev.common.constant.oauth2.OAuth2Provider
 import com.hyunbindev.common.constant.oauth2.OAuth2Provider.*
 import com.hyunbindev.user.data.UserInfoDto
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.oauth2.core.user.OAuth2User
-import java.io.Serializable
 
 /**
  * OAuth2 인증을 통해 로드된 사용자 정보를 담는 [OAuth2User] 및 [OAuth2UserPrincipal]의 구현체.
