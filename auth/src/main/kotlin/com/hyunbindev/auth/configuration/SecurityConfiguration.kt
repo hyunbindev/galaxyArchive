@@ -25,7 +25,7 @@ class SecurityConfiguration(
                     "/login/**",
                     "/oauth2/**",
                     "/api/v1/auth/**",
-                    "/test").permitAll()
+                    "/test/**").permitAll()
                     .anyRequest().authenticated()
             }
             .oauth2Login { oauth ->
