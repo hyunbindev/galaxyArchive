@@ -8,12 +8,12 @@ import com.hyunbindev.user.repository.UserRepository
 import org.springframework.stereotype.Service
 
 @Service
-internal class UserServiceImpl(
+internal class UserApplicationImpl(
     private val userSignupService: UserSignupService,
     private val userUpdateService: UserUpdateService,
 
     private val userRepository: UserRepository,
-) : UserService {
+) : UserApplication {
     override fun signup(userInfoDto: UserInfoDto) {
         userSignupService.signup(userInfoDto)
     }
