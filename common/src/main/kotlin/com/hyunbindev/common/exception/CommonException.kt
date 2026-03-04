@@ -19,6 +19,4 @@ abstract class CommonException(
 ) : RuntimeException(message?:exceptionCode.message, cause){
 
     fun getStatus(): HttpStatus = exceptionCode.status
-
-    fun getMessage():String = message?:exceptionCode.message
 }
