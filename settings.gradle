@@ -4,7 +4,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
-rootProject.name = 'galaxyarchive'
+rootProject.name = 'galaxyarchive-be'
 
 
 include 'api'
