@@ -1,4 +1,4 @@
-package com.hyunbindev.article.application.service.vector
+package com.hyunbindev.article.application.service.vector.command
 
 import com.hyunbindev.article.domain.entity.ArticleEntity
 import com.hyunbindev.article.domain.entity.ArticleVectorEntity
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service
         val article: ArticleEntity = articleRepository.findByIdOrNull(articleId)?:throw RuntimeException("Article not found")
         val vector:FloatArray = embeddingModel.embed(article.text)
 
-        val vectorArticle:ArticleVectorEntity = ArticleVectorEntity(
+        val vectorArticle: ArticleVectorEntity = ArticleVectorEntity(
             article = article,
             vector = vector,
         )

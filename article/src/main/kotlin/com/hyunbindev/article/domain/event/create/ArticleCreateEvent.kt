@@ -19,6 +19,7 @@ data class ArticleCreateEvent(
     companion object{
         fun from(article: ArticleEntity): ArticleCreateEvent{
             val id = article.id ?: throw IllegalArgumentException("article id is null")
+
             return ArticleCreateEvent(
                 articleId = id,
                 authorId = article.authorId,

@@ -1,6 +1,6 @@
 package com.hyunbindev.article.infrastructure.event.listener
 
-import com.hyunbindev.article.application.service.vector.ArticleVectorService
+import com.hyunbindev.article.application.service.vector.command.ArticleVectorService
 import com.hyunbindev.article.domain.event.create.ArticleCreateEvent
 import com.hyunbindev.article.domain.event.create.ArticleCreateEventListener
 import org.slf4j.Logger
