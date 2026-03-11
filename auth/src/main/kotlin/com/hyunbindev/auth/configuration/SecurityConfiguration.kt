@@ -24,6 +24,7 @@ class SecurityConfiguration(
                     "/login/**",
                     "/oauth2/**",
                     "/api/v1/auth/**",
+                    "/api/v1/article",
                     "/test/**").permitAll()
                     .anyRequest().authenticated()
             }

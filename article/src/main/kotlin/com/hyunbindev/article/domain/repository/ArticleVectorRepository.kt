@@ -10,14 +10,14 @@ import org.springframework.stereotype.Repository
 interface ArticleVectorRepository : JpaRepository<ArticleVectorEntity, Long> {
     @Query(
         """
-                    SELECT
-                        a.id AS u,
-                        b.id AS v,
-                        (1 - (a.embedding <=> b.embedding)) AS w
-                    FROM article_vector_entity a
-                    JOIN article_vector_entity b ON a.id < b.id
-                    WHERE (1 - (a.embedding <=> b.embedding)) >= 0.6
-                    ORDER BY similarity DESC;
+                SELECT
+                    a.article_id AS u,
+                    b.article_id AS v,
+                    (1 - (a.vector <=> b.vector)) AS w
+                FROM article_vector_entity a
+                JOIN article_vector_entity b ON a.article_id < b.article_id
+                WHERE (1 - (a.vector <=> b.vector)) >= 0.6
+                ORDER BY w DESC;
                """, nativeQuery = true)
     fun findAllEdgesOrderByWeightDESC(): List<ArticleEdgeProjection>
 }
