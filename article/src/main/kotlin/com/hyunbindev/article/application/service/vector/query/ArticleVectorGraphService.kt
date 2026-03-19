@@ -11,7 +11,7 @@ class ArticleVectorGraphService(
     private val articleVectorRepository: ArticleVectorRepository
 ): ArticleGraphUserCase {
     override fun getAllArticleGraph():List<VectorEdge>{
-        val edges = articleVectorRepository.findAllEdgesOrderByWeightDESC()
+        val edges = articleVectorRepository.findAllEdgesOrderByWeightASC()
             .map { VectorEdge(it.u,it.v,it.w) }
         return VectorGraph(edges).getMinimumSpanningTree()
     }

@@ -6,6 +6,6 @@ data class VectorEdge(
     val w:Float
 ) : Comparable<VectorEdge> {
     override fun compareTo(other: VectorEdge): Int {
-        return other.w.compareTo(this.w)
+        return this.w.compareTo(other.w)
     }
 }

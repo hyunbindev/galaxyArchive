@@ -21,19 +21,18 @@ class VectorGraph(val edges:List<VectorEdge>) {
         parent[n] = parent[n] ?: n
         if (parent[n] == n) return n
 
-        parent[n] = find(n)
+        parent[n] = find(parent[n]!!)
 
         return parent[n]?:n
     }
     private fun union(u:Long,v:Long){
-        TODO("infinite recursive issue")
         val rootU = find(u)
         val rootV = find(v)
         if(rootU != rootV) parent[rootU] = rootV
     }
     private fun isSorted(e:List<VectorEdge>):List<VectorEdge>{
         for (i in 0 until e.size-1){
-            if(e[i] < e[i+1]) return e.sorted()
+            if(e[i] > e[i+1]) return e.sorted()
         }
         return e
     }

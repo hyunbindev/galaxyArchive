@@ -13,13 +13,13 @@ interface ArticleVectorRepository : JpaRepository<ArticleVectorEntity, Long> {
                 SELECT
                     a.article_id AS u,
                     b.article_id AS v,
-                    (1 - (a.vector <=> b.vector)) AS w
+                    a.vector <=> b.vector AS w
                 FROM article_vector_entity a
                 JOIN article_vector_entity b ON a.article_id < b.article_id
-                WHERE (1 - (a.vector <=> b.vector)) >= 0.6
-                ORDER BY w DESC;
+                WHERE a.vector <=> b.vector < 0.4
+                ORDER BY w ASC;
                """, nativeQuery = true)
-    fun findAllEdgesOrderByWeightDESC(): List<ArticleEdgeProjection>
+    fun findAllEdgesOrderByWeightASC(): List<ArticleEdgeProjection>
 }
 
 interface ArticleEdgeProjection{
