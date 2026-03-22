@@ -2,6 +2,7 @@ package com.hyunbindev.article.domain.entity
 
 import com.hyunbindev.article.application.ArticleStatus
 import com.hyunbindev.article.data.dto.ArticleDto
+import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
@@ -16,6 +17,7 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Entity
+@Schema(description = "response user info")
 class ArticleEntity(
     @Column(nullable = false)
     val title:String,

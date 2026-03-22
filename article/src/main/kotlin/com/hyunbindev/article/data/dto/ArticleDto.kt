@@ -14,6 +14,7 @@ class ArticleDto {
 
     @Schema(description = "response article")
     data class Response(
+        val id:Long?,
         val title: String,
         val text: String,
         val authorId: UUID,
@@ -22,6 +23,7 @@ class ArticleDto {
         companion object{
             fun from(entity: ArticleEntity): Response{
                 return Response(
+                    id = entity.id,
                     title = entity.title,
                     text = entity.text,
                     authorId = entity.authorId,
