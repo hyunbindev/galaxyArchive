@@ -23,8 +23,8 @@ class ArticleController(
     private val articleQueryComposition: ArticleQueryComposition,
 ) {
     @PostMapping
-    fun createArticle(@LoginUserId userId: UUID, @RequestBody req: ArticleDto.CreateRequest){
-        createArticleUseCase.createArticle(userId, req)
+    fun createArticle(@LoginUserId userId: UUID, @RequestBody req: ArticleDto.CreateRequest):Long{
+        return createArticleUseCase.createArticle(userId, req)
     }
 
     @GetMapping("/graphs")
