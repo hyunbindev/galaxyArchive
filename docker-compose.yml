@@ -65,6 +65,21 @@ services:
       - "11434:11434"
     volumes:
       - ./volumes/ollama_data:/root/.ollama
+
+  #minio Object Storage
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: galaxy-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: 'galaxyarchive'
+      MINIO_ROOT_PASSWORD: 'galaxyarchivepw'
+    volumes:
+      - ./minio_data:/data
+    command: server /data --console-address ":9001"
+    restart: always
 networks:
   galaxy-network:
     driver: bridge
