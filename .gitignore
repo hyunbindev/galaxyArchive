@@ -39,3 +39,6 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+#data
+/minio_data
