@@ -1,5 +1,5 @@
 package com.hyunbindev.article.domain.event.create
 
-interface ArticleCreateEventPublisher {
+interface ArticleEventPublisher {
     fun publishCreateEvent(event:ArticleCreateEvent)
 }

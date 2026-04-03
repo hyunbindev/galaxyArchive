@@ -1,14 +1,15 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm'
     id 'org.jetbrains.kotlin.plugin.spring'
-    id 'org.springframework.boot'
     id 'io.spring.dependency-management'
     id 'org.jetbrains.kotlin.plugin.jpa'
 }
 
+tasks.register("prepareKotlinBuildScriptModel"){}
+
 group = 'com.hyunbindev'
 version = '0.0.1-SNAPSHOT'
-description = 'article'
+description = 'infrastructure'
 
 java {
     toolchain {
@@ -18,19 +19,21 @@ java {
 
 repositories {
     mavenCentral()
+    maven { url = 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
     implementation project(':common')
+    implementation project(':article')
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter'
+
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
 
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'org.springframework.ai:spring-ai-starter-model-ollama'
+    implementation 'org.springframework.kafka:spring-kafka'
 
-
-    runtimeOnly 'org.postgresql:postgresql'
+    implementation 'io.minio:minio:8.5.7'
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.600'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit5'
@@ -41,6 +44,12 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.addAll '-Xjsr305=strict'
     }
+}
+
+allOpen {
+    annotation 'jakarta.persistence.Entity'
+    annotation 'jakarta.persistence.MappedSuperclass'
+    annotation 'jakarta.persistence.Embeddable'
 }
 
 tasks.named('test') {

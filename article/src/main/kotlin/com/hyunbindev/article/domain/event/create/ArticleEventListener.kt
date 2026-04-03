@@ -1,5 +1,5 @@
 package com.hyunbindev.article.domain.event.create
 
-interface ArticleCreateEventListener {
+interface ArticleEventListener {
     fun onArticleCreated(event: ArticleCreateEvent)
 }
