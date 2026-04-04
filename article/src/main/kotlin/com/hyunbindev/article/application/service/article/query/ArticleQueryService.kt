@@ -1,7 +1,7 @@
 package com.hyunbindev.article.application.service.article.query
 
 import com.hyunbindev.article.application.port.ArticleQueryUseCase
-import com.hyunbindev.article.data.dto.ArticleDto
+import com.hyunbindev.article.data.article.ArticleDto
 import com.hyunbindev.article.domain.repository.ArticleRepository
 import com.hyunbindev.article.exception.ArticleException
 import com.hyunbindev.article.exception.constant.ArticleExceptionCode

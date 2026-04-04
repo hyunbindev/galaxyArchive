@@ -4,7 +4,7 @@ import com.hyunbindev.api.article.composition.ArticleQueryComposition
 import com.hyunbindev.api.article.data.ArticleCompositionDto
 import com.hyunbindev.article.application.port.ArticleGraphUseCase
 import com.hyunbindev.article.application.port.CreateArticleUseCase
-import com.hyunbindev.article.data.dto.ArticleDto
+import com.hyunbindev.article.data.article.ArticleDto
 import com.hyunbindev.article.domain.graph.VectorEdge
 import com.hyunbindev.common.auth.LoginUserId
 import org.springframework.web.bind.annotation.GetMapping

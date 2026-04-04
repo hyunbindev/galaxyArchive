@@ -7,7 +7,7 @@ import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
 
 @Component
-internal class ArticleKafkaListener(
+class ArticleKafkaListener(
     private val articleVectorService: ArticleVectorService,
 ): ArticleEventListener {
     @KafkaListener(

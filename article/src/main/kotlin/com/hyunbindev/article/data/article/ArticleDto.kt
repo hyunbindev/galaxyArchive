@@ -1,4 +1,4 @@
-package com.hyunbindev.article.data.dto
+package com.hyunbindev.article.data.article
 
 import com.hyunbindev.article.domain.entity.ArticleEntity
 import io.swagger.v3.oas.annotations.media.Schema

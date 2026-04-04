@@ -1,6 +1,6 @@
 package com.hyunbindev.api.article.data
 
-import com.hyunbindev.article.data.dto.ArticleDto
+import com.hyunbindev.article.data.article.ArticleDto
 import com.hyunbindev.common.constant.oauth2.OAuth2Provider
 import com.hyunbindev.user.data.UserInfoDto
 import java.time.LocalDateTime

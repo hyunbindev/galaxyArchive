@@ -1,7 +1,7 @@
 package com.hyunbindev.article.domain.entity
 
 import com.hyunbindev.article.application.ArticleStatus
-import com.hyunbindev.article.data.dto.ArticleDto
+import com.hyunbindev.article.data.article.ArticleDto
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
