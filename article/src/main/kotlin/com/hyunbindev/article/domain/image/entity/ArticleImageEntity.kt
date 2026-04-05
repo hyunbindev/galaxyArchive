@@ -11,6 +11,9 @@ import java.util.UUID
 
 @Entity
 class ArticleImageEntity(
+    @Column(nullable = false)
+    var author:UUID,
+
     @Column(nullable = true)
     var rawKey: String?,
 ) {
@@ -34,7 +37,7 @@ class ArticleImageEntity(
     val createdAt: LocalDateTime = LocalDateTime.now()
 
     companion object{
-        fun startUpload():ArticleImageEntity = ArticleImageEntity(null)
+        fun startUpload(userId:UUID):ArticleImageEntity = ArticleImageEntity(userId,null)
     }
 
     fun completeUpload(rawKey:String){

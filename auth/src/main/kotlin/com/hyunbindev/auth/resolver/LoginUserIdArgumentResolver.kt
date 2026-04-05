@@ -11,6 +11,8 @@ import org.springframework.web.method.support.ModelAndViewContainer
 import java.util.UUID
 import kotlin.jvm.java
 
+
+//TODO: Extract to common-web module
 @Component
 class LoginUserIdArgumentResolver(private val userProvider: UserProvider): HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {

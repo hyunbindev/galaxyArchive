@@ -1,5 +1,6 @@
 package com.hyunbindev.article.application.service.image.command
 
+import com.hyunbindev.article.application.port.CreateArticleImageUseCase
 import com.hyunbindev.article.data.image.ArticleImageDto
 import com.hyunbindev.article.domain.image.entity.ArticleImageEntity
 import com.hyunbindev.article.domain.image.port.ArticleImageUpload
@@ -19,20 +20,26 @@ internal class CreateArticleImageService(
     private val articleImageRepository: ArticleImageRepository,
     private val articleImageUpload: ArticleImageUpload,
     private val transactionTemplate: TransactionTemplate
-) {
+): CreateArticleImageUseCase {
     private val logger = LoggerFactory.getLogger(CreateArticleImageService::class.java)
 
-    fun upLoadArticleImage(userId: UUID, request: ArticleImageDto.ImageUploadRequest, imageFile: File):String {
+    override fun upLoadArticleImage(userId: UUID, request: ArticleImageDto.ImageUploadRequest, imageFile: File):String {
+
         val articleImageEntity: ArticleImageEntity = transactionTemplate.execute {
-            articleImageRepository.save(ArticleImageEntity.startUpload())
+
+            articleImageRepository.save(ArticleImageEntity.startUpload(userId))
+
         } ?: throw ArticleImageException(ArticleImageExceptionCode.ARTICLEIMAGE_TEMPTRASACTION_FAIL)
 
         return try{
+
+            //image key it contained prefix path and image uuid key
             val rawKey:String = articleImageUpload.uploadImage(request.originalName, imageFile.length(),request.contentType, imageFile.inputStream())
 
             val managedEntity: ArticleImageEntity = transactionTemplate.execute {
                 val managedEntity = articleImageRepository.findByImageUuid(articleImageEntity.imageUuid)
 
+                //Change image status after uploaded
                 managedEntity?.completeUpload(rawKey)
 
                 managedEntity
