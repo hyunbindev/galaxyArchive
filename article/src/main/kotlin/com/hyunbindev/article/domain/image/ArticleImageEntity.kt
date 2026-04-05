@@ -1,6 +1,5 @@
-package com.hyunbindev.article.domain.entity
+package com.hyunbindev.article.domain.image
 
-import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -14,7 +13,6 @@ import java.util.UUID
 class ArticleImageEntity(
     @Column(nullable = true)
     var rawKey: String
-
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

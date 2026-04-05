@@ -2,10 +2,10 @@ package com.hyunbindev.article.application.service.article.command.create
 
 import com.hyunbindev.article.application.port.CreateArticleUseCase
 import com.hyunbindev.article.data.article.ArticleDto
-import com.hyunbindev.article.domain.entity.ArticleEntity
-import com.hyunbindev.article.domain.event.create.ArticleCreateEvent
-import com.hyunbindev.article.domain.event.create.ArticleEventPublisher
-import com.hyunbindev.article.domain.repository.ArticleRepository
+import com.hyunbindev.article.domain.article.ArticleEntity
+import com.hyunbindev.article.domain.article.event.ArticleCreateEvent
+import com.hyunbindev.article.domain.article.event.ArticleEventPublisher
+import com.hyunbindev.article.domain.article.repository.ArticleRepository
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.util.UUID

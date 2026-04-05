@@ -1,6 +1,6 @@
 package com.hyunbindev.article.data.article
 
-import com.hyunbindev.article.domain.entity.ArticleEntity
+import com.hyunbindev.article.domain.article.ArticleEntity
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDateTime
 import java.util.UUID

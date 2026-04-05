@@ -1,4 +1,4 @@
-package com.hyunbindev.article.domain.entity
+package com.hyunbindev.article.domain.article
 
 import com.hyunbindev.article.application.ArticleStatus
 import com.hyunbindev.article.data.article.ArticleDto
@@ -10,7 +10,6 @@ import jakarta.persistence.Enumerated
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import jakarta.persistence.Table
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
 import java.time.LocalDateTime

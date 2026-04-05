@@ -1,9 +1,9 @@
 package com.hyunbindev.article.application.service.vector.query
 
 import com.hyunbindev.article.application.port.ArticleGraphUseCase
-import com.hyunbindev.article.domain.graph.VectorEdge
-import com.hyunbindev.article.domain.graph.VectorGraph
-import com.hyunbindev.article.domain.repository.ArticleVectorRepository
+import com.hyunbindev.article.domain.vector.VectorEdge
+import com.hyunbindev.article.domain.vector.VectorGraph
+import com.hyunbindev.article.domain.vector.repository.ArticleVectorRepository
 import org.springframework.stereotype.Service
 
 @Service

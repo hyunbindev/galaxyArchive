@@ -1,7 +1,7 @@
-package com.hyunbindev.article.domain.event.create
+package com.hyunbindev.article.domain.article.event
 
 import com.fasterxml.jackson.annotation.JsonFormat
-import com.hyunbindev.article.domain.entity.ArticleEntity
+import com.hyunbindev.article.domain.article.ArticleEntity
 import java.time.LocalDateTime
 import java.util.UUID
 
