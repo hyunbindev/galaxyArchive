@@ -2,7 +2,7 @@ package com.hyunbindev.article.application.service.article.command.create
 
 import com.hyunbindev.article.application.port.CreateArticleUseCase
 import com.hyunbindev.article.data.article.ArticleDto
-import com.hyunbindev.article.domain.article.ArticleEntity
+import com.hyunbindev.article.domain.article.entity.ArticleEntity
 import com.hyunbindev.article.domain.article.event.ArticleCreateEvent
 import com.hyunbindev.article.domain.article.event.ArticleEventPublisher
 import com.hyunbindev.article.domain.article.repository.ArticleRepository

@@ -1,4 +1,4 @@
-package com.hyunbindev.article.domain.image
+package com.hyunbindev.article.domain.image.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -12,7 +12,7 @@ import java.util.UUID
 @Entity
 class ArticleImageEntity(
     @Column(nullable = true)
-    var rawKey: String
+    var rawKey: String?,
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +32,14 @@ class ArticleImageEntity(
 
     @CreatedDate
     val createdAt: LocalDateTime = LocalDateTime.now()
+
+    companion object{
+        fun startUpload():ArticleImageEntity = ArticleImageEntity(null)
+    }
+
+    fun completeUpload(rawKey:String){
+        this.rawKey = rawKey
+    }
 }
 
 enum class ImageStatus(var status: String) {

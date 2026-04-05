@@ -1,6 +1,6 @@
 package com.hyunbindev.article.domain.article.repository
 
-import com.hyunbindev.article.domain.article.ArticleEntity
+import com.hyunbindev.article.domain.article.entity.ArticleEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository

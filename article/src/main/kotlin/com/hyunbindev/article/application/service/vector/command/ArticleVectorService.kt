@@ -1,8 +1,8 @@
 package com.hyunbindev.article.application.service.vector.command
 
-import com.hyunbindev.article.application.ArticleStatus
-import com.hyunbindev.article.domain.article.ArticleEntity
-import com.hyunbindev.article.domain.vector.ArticleVectorEntity
+import com.hyunbindev.article.domain.article.entity.ArticleStatus
+import com.hyunbindev.article.domain.article.entity.ArticleEntity
+import com.hyunbindev.article.domain.vector.entity.ArticleVectorEntity
 import com.hyunbindev.article.domain.article.repository.ArticleRepository
 import com.hyunbindev.article.domain.vector.repository.ArticleVectorRepository
 import jakarta.transaction.Transactional

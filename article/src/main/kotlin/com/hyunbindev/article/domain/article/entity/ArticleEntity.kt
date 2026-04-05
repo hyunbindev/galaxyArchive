@@ -1,6 +1,5 @@
-package com.hyunbindev.article.domain.article
+package com.hyunbindev.article.domain.article.entity
 
-import com.hyunbindev.article.application.ArticleStatus
 import com.hyunbindev.article.data.article.ArticleDto
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.persistence.Column

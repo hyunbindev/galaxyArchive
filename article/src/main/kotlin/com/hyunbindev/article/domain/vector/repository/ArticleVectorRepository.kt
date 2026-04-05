@@ -1,6 +1,6 @@
 package com.hyunbindev.article.domain.vector.repository
 
-import com.hyunbindev.article.domain.vector.ArticleVectorEntity
+import com.hyunbindev.article.domain.vector.entity.ArticleVectorEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
