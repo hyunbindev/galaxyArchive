@@ -25,7 +25,7 @@ dependencies {
     implementation project(':auth')
     implementation project(':user')
     implementation project(':article')
-    runtimeOnly project(':infrastructure')
+    implementation project(':infrastructure')
 
     //for ollama webflux
     implementation "org.springframework.boot:spring-boot-starter-webflux"

@@ -1,4 +1,4 @@
-package com.hyunbindev.infrastructure.article.kafaka
+package com.hyunbindev.infrastructure.article.event.kafaka
 
 import com.hyunbindev.article.domain.article.event.ArticleCreateEvent
 import com.hyunbindev.article.domain.article.event.ArticleEventPublisher

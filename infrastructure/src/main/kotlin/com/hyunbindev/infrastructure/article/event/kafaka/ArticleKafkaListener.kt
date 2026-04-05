@@ -1,8 +1,9 @@
-package com.hyunbindev.infrastructure.article.kafaka
+package com.hyunbindev.infrastructure.article.event.kafaka
 
 import com.hyunbindev.article.application.service.vector.command.ArticleVectorService
 import com.hyunbindev.article.domain.article.event.ArticleCreateEvent
 import com.hyunbindev.article.domain.article.event.ArticleEventListener
+
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
 

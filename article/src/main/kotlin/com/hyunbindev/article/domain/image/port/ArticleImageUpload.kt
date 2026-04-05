@@ -5,5 +5,5 @@ import java.io.InputStream
 import java.util.UUID
 
 interface ArticleImageUpload {
-    fun uploadImage(originalName:String, contentType:String, imageByteStream: InputStream):String
+    fun uploadImage(key:String, fileSize:Long, contentType:String, imageByteStream: InputStream):String
 }
