@@ -4,6 +4,8 @@ import com.hyunbindev.article.data.image.ArticleImageDto
 import com.hyunbindev.article.domain.image.entity.ArticleImageEntity
 import com.hyunbindev.article.domain.image.port.ArticleImageUpload
 import com.hyunbindev.article.domain.image.repository.ArticleImageRepository
+import com.hyunbindev.article.exception.ArticleImageException
+import com.hyunbindev.article.exception.constant.ArticleImageExceptionCode
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -21,10 +23,9 @@ internal class CreateArticleImageService(
     private val logger = LoggerFactory.getLogger(CreateArticleImageService::class.java)
 
     fun upLoadArticleImage(userId: UUID, request: ArticleImageDto.ImageUploadRequest, imageFile: File):String {
-        //TODO-need to implement article image exception
         val articleImageEntity: ArticleImageEntity = transactionTemplate.execute {
             articleImageRepository.save(ArticleImageEntity.startUpload())
-        } ?: throw RuntimeException("fail to upload articleImage")
+        } ?: throw ArticleImageException(ArticleImageExceptionCode.ARTICLEIMAGE_TEMPTRASACTION_FAIL)
 
         return try{
             val rawKey:String = articleImageUpload.uploadImage(request.originalName, imageFile.length(),request.contentType, imageFile.inputStream())
@@ -35,8 +36,7 @@ internal class CreateArticleImageService(
                 managedEntity?.completeUpload(rawKey)
 
                 managedEntity
-                //TODO-need to implement article image exception
-            } ?: throw RuntimeException("notfound image entity")
+            } ?: throw ArticleImageException(ArticleImageExceptionCode.ARTICLEIMAGE_INFO_LOST)
 
             managedEntity.imageUuid.toString()
 
