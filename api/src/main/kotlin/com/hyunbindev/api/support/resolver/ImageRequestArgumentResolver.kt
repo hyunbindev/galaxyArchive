@@ -12,7 +12,8 @@ import kotlin.jvm.java
 
 class ImageRequestArgumentResolver:HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.hasParameterAnnotation(UploadImageHeader::class.java) && parameter.parameterType == ImageUploadMetadata::class.java
+        return parameter.hasParameterAnnotation(UploadImageHeader::class.java)
+                &&ImageUploadMetadata::class.java.isAssignableFrom(parameter.parameterType)
     }
 
     override fun resolveArgument(
@@ -20,15 +21,16 @@ class ImageRequestArgumentResolver:HandlerMethodArgumentResolver {
         mavContainer: ModelAndViewContainer?,
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
-    ): Any? {
+    ): Any {
+
         val originalName = webRequest.getHeader(ImageUploadMetadata.Headers.ORIGINAL_NAME)
-            ?: throw IllegalArgumentException("${ImageUploadMetadata.Headers.ORIGINAL_NAME} 헤더가 누락되었습니다.")
+            ?: throw IllegalArgumentException("[${ImageUploadMetadata.Headers.ORIGINAL_NAME}] empty header")
 
         val contentTypeRaw = webRequest.getHeader(ImageUploadMetadata.Headers.CONTENT_TYPE)
-            ?: throw IllegalArgumentException("${ImageUploadMetadata.Headers.CONTENT_TYPE} 헤더가 누락되었습니다.")
+            ?: throw IllegalArgumentException("${ImageUploadMetadata.Headers.CONTENT_TYPE} empty header")
 
         val contentLength = webRequest.getHeader(ImageUploadMetadata.Headers.CONTENT_LENGTH)?.toLong()
-            ?: throw IllegalArgumentException("${ImageUploadMetadata.Headers.CONTENT_LENGTH} 헤더가 누락되었습니다.")
+            ?: throw IllegalArgumentException("${ImageUploadMetadata.Headers.CONTENT_LENGTH} empty header")
 
         val extension = try {
             ImageExtension.from(contentTypeRaw)

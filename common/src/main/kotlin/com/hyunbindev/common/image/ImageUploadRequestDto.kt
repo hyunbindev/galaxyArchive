@@ -34,6 +34,9 @@ data class ImageUploadMetadata(
         const val CONTENT_TYPE:String = "Content-Type"
         const val CONTENT_LENGTH:String = "Content-Length"
     }
+    fun getImageExtension():String{
+        return this.contentType.mimeType
+    }
 }
 
 enum class ImageExtension(val mimeType:String){

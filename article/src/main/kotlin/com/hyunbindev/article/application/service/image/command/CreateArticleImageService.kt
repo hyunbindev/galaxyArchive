@@ -7,6 +7,8 @@ import com.hyunbindev.article.domain.image.port.ArticleImageUpload
 import com.hyunbindev.article.domain.image.repository.ArticleImageRepository
 import com.hyunbindev.article.exception.ArticleImageException
 import com.hyunbindev.article.exception.constant.ArticleImageExceptionCode
+import com.hyunbindev.common.image.ImageExtension
+import com.hyunbindev.common.image.ImageUploadMetadata
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -23,7 +25,7 @@ internal class CreateArticleImageService(
 ): CreateArticleImageUseCase {
     private val logger = LoggerFactory.getLogger(CreateArticleImageService::class.java)
 
-    override fun upLoadArticleImage(userId: UUID, request: ArticleImageDto.ImageUploadRequest, imageFile: File):String {
+    override fun upLoadArticleImage(userId: UUID, request: ImageUploadMetadata, imageStream: InputStream):String {
 
         val articleImageEntity: ArticleImageEntity = transactionTemplate.execute {
 
@@ -34,7 +36,7 @@ internal class CreateArticleImageService(
         return try{
 
             //image key it contained prefix path and image uuid key
-            val rawKey:String = articleImageUpload.uploadImage(request.originalName, imageFile.length(),request.contentType, imageFile.inputStream())
+            val rawKey:String = articleImageUpload.uploadImage(request.originalName, request.contentLength,request.getImageExtension(), imageStream)
 
             val managedEntity: ArticleImageEntity = transactionTemplate.execute {
                 val managedEntity = articleImageRepository.findByImageUuid(articleImageEntity.imageUuid)
