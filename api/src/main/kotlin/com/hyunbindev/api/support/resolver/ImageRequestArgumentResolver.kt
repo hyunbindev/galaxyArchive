@@ -23,8 +23,6 @@ class ImageRequestArgumentResolver:HandlerMethodArgumentResolver {
         binderFactory: WebDataBinderFactory?
     ): Any {
 
-        val originalName = webRequest.getHeader(ImageUploadMetadata.Headers.ORIGINAL_NAME)
-            ?: throw IllegalArgumentException("[${ImageUploadMetadata.Headers.ORIGINAL_NAME}] empty header")
 
         val contentTypeRaw = webRequest.getHeader(ImageUploadMetadata.Headers.CONTENT_TYPE)
             ?: throw IllegalArgumentException("${ImageUploadMetadata.Headers.CONTENT_TYPE} empty header")
@@ -39,7 +37,6 @@ class ImageRequestArgumentResolver:HandlerMethodArgumentResolver {
         }
 
         return ImageUploadMetadata(
-            originalName = originalName,
             contentType = extension,
             contentLength = contentLength
         )

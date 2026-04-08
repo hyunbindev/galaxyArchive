@@ -16,7 +16,6 @@ package com.hyunbindev.common.image
  * @author hyunbindev
  * @since 2026-04-05
  *
- * @param originalName The original filename including extension (e.g., "vacation.jpg")
  * @param contentType  The validated image media type
  * @param contentLength The exact size of the binary payload in bytes
  *
@@ -25,12 +24,10 @@ package com.hyunbindev.common.image
  *
  */
 data class ImageUploadMetadata(
-    val originalName:String,
     val contentType: ImageExtension,
     val contentLength: Long,
 ){
     object Headers{
-        const val ORIGINAL_NAME:String = "X-Original-Name"
         const val CONTENT_TYPE:String = "Content-Type"
         const val CONTENT_LENGTH:String = "Content-Length"
     }
