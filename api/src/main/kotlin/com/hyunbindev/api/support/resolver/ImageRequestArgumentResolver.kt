@@ -4,12 +4,13 @@ import com.hyunbindev.common.image.ImageExtension
 import com.hyunbindev.common.image.ImageUploadMetadata
 import com.hyunbindev.common.image.UploadImageHeader
 import org.springframework.core.MethodParameter
+import org.springframework.stereotype.Component
 import org.springframework.web.bind.support.WebDataBinderFactory
 import org.springframework.web.context.request.NativeWebRequest
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
 import org.springframework.web.method.support.ModelAndViewContainer
 import kotlin.jvm.java
-
+@Component
 class ImageRequestArgumentResolver:HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         return parameter.hasParameterAnnotation(UploadImageHeader::class.java)

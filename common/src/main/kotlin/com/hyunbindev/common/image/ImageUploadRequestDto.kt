@@ -28,8 +28,8 @@ data class ImageUploadMetadata(
     val contentLength: Long,
 ){
     object Headers{
-        const val CONTENT_TYPE:String = "Content-Type"
-        const val CONTENT_LENGTH:String = "Content-Length"
+        const val CONTENT_TYPE:String = "X-Content-Type"
+        const val CONTENT_LENGTH:String = "x-content-length"
     }
     fun getImageExtension():String{
         return this.contentType.mimeType

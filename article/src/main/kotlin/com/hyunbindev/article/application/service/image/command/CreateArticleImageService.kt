@@ -36,7 +36,7 @@ internal class CreateArticleImageService(
         return try{
 
             //image key it contained prefix path and image uuid key
-            val rawKey:String = articleImageUpload.uploadImage(request.originalName, request.contentLength,request.getImageExtension(), imageStream)
+            val rawKey:String = articleImageUpload.uploadImage( articleImageEntity.imageUuid.toString(), request.contentLength,request.getImageExtension(), imageStream)
 
             val managedEntity: ArticleImageEntity = transactionTemplate.execute {
                 val managedEntity = articleImageRepository.findByImageUuid(articleImageEntity.imageUuid)
