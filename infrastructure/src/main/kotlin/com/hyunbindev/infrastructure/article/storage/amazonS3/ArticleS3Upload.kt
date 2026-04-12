@@ -1,7 +1,9 @@
 package com.hyunbindev.infrastructure.article.storage.amazonS3
 
 import com.amazonaws.services.s3.AmazonS3
+import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.ObjectMetadata
+import com.amazonaws.services.s3.model.PutObjectRequest
 import com.hyunbindev.article.domain.image.port.ArticleImageUpload
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -30,7 +32,11 @@ class ArticleS3Upload(
             return try {
 
                 val fullPath = "$prefix/$key"
-                amazonS3.putObject(bucket, fullPath, stream, metadata)
+
+                val putRequest = PutObjectRequest(bucket, fullPath, stream, metadata)
+                    .withCannedAcl(CannedAccessControlList.PublicRead)
+
+                amazonS3.putObject(putRequest)
 
                 fullPath
             }catch (e: Exception) {

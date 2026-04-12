@@ -2,6 +2,7 @@ package com.hyunbindev.api.support.resolver
 
 import com.hyunbindev.common.image.RequestByteStream
 import jakarta.servlet.http.HttpServletRequest
+import org.slf4j.LoggerFactory
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.support.WebDataBinderFactory
@@ -14,16 +15,12 @@ import java.io.InputStream
 
 @Component
 class ByteStreamRequestArgumentResolver: HandlerMethodArgumentResolver {
+
+    private val log = LoggerFactory.getLogger(ByteStreamRequestArgumentResolver::class.java)
+
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        val isValidatedRequest =  parameter.hasParameterAnnotation(RequestByteStream::class.java)
+        return  parameter.hasParameterAnnotation(RequestByteStream::class.java)
                 && InputStream::class.java.isAssignableFrom(parameter.parameterType)
-
-        val servletRequest = RequestContextHolder.getRequestAttributes() as? ServletRequestAttributes
-        val method = servletRequest?.request?.method
-
-        val isSupportedMethod = method in listOf("POST", "PUT", "PATCH")
-
-        return isValidatedRequest && isSupportedMethod
     }
 
     override fun resolveArgument(
@@ -32,6 +29,7 @@ class ByteStreamRequestArgumentResolver: HandlerMethodArgumentResolver {
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
     ): Any {
+        log.debug("Resolving request to {}", parameter.parameterType)
         val request: HttpServletRequest = webRequest.getNativeRequest(HttpServletRequest::class.java)
             ?:throw IllegalArgumentException("ServletRequest missing")
         return request.inputStream

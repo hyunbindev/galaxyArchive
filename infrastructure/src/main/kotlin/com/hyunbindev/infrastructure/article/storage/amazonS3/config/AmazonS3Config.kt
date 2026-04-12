@@ -34,6 +34,23 @@ class AmazonS3Config(
                 s3Client.createBucket(bucket)
                 logger.info("Created bucket $bucket")
             }
+            val publicReadPolicy = """
+                {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Sid": "PublicRead",
+                            "Effect": "Allow",
+                            "Principal": "*",
+                            "Action": ["s3:GetObject"],
+                            "Resource": ["arn:aws:s3:::$bucket/*"]
+                        }
+                    ]
+                }
+            """.trimIndent()
+
+            s3Client.setBucketPolicy(bucket, publicReadPolicy)
+            logger.info("Successfully set public read policy for bucket $bucket")
         }catch(e:Exception){
             logger.error("Error can not init Amazon S3 Bucket $bucket", e)
             throw e

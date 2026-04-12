@@ -25,7 +25,8 @@ internal class CreateArticleImageService(
 ): CreateArticleImageUseCase {
     private val logger = LoggerFactory.getLogger(CreateArticleImageService::class.java)
 
-    override fun upLoadArticleImage(userId: UUID, request: ImageUploadMetadata, imageStream: InputStream):String {
+    override fun upLoadArticleImage(userId: UUID, request: ImageUploadMetadata, imageStream: InputStream): String {
+
 
         val articleImageEntity: ArticleImageEntity = transactionTemplate.execute {
 
@@ -47,7 +48,7 @@ internal class CreateArticleImageService(
                 managedEntity
             } ?: throw ArticleImageException(ArticleImageExceptionCode.ARTICLEIMAGE_INFO_LOST)
 
-            managedEntity.imageUuid.toString()
+            managedEntity.rawKey ?: throw RuntimeException("failed to load raw key")
 
         }catch (e: RuntimeException){
             logger.error("S3 Upload Failed for entity: ${articleImageEntity.imageUuid}", e)

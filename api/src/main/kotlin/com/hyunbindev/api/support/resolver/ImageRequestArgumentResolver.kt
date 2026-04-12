@@ -3,6 +3,7 @@ package com.hyunbindev.api.support.resolver
 import com.hyunbindev.common.image.ImageExtension
 import com.hyunbindev.common.image.ImageUploadMetadata
 import com.hyunbindev.common.image.UploadImageHeader
+import org.slf4j.LoggerFactory
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.support.WebDataBinderFactory
@@ -12,9 +13,21 @@ import org.springframework.web.method.support.ModelAndViewContainer
 import kotlin.jvm.java
 @Component
 class ImageRequestArgumentResolver:HandlerMethodArgumentResolver {
+
+    private val log = LoggerFactory.getLogger(ImageRequestArgumentResolver::class.java)
+
     override fun supportsParameter(parameter: MethodParameter): Boolean {
-        return parameter.hasParameterAnnotation(UploadImageHeader::class.java)
-                &&ImageUploadMetadata::class.java.isAssignableFrom(parameter.parameterType)
+
+        val hasAnnotation = parameter.hasParameterAnnotation(UploadImageHeader::class.java)
+
+        if (!hasAnnotation) return false
+
+        if (!ImageUploadMetadata::class.java.isAssignableFrom(parameter.parameterType)) {
+            throw IllegalArgumentException("IllegalArgument parameter type: ${parameter.parameterType}")
+        }
+
+
+        return true
     }
 
     override fun resolveArgument(
@@ -23,6 +36,7 @@ class ImageRequestArgumentResolver:HandlerMethodArgumentResolver {
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
     ): Any {
+        log.debug("Resolving request from {}", parameter.parameterType)
 
 
         val contentTypeRaw = webRequest.getHeader(ImageUploadMetadata.Headers.CONTENT_TYPE)
