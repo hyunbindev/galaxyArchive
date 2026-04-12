@@ -44,6 +44,16 @@ class SecurityConfiguration(
                     .successHandler(oAuth2SuccessService)
                     .failureUrl("/oauth2/error")
             }
+            //log out
+            .logout { logout->
+                logout.logoutUrl("/api/v1/auth/logout")
+                    .logoutSuccessHandler{_,response,_ ->
+                        response.status = HttpStatus.OK.value()
+                    }
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .deleteCookies("JSESSIONID")
+            }
         return http.build();
     }
 }
