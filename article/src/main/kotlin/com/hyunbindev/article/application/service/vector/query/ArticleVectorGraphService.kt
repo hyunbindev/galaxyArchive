@@ -12,7 +12,7 @@ class ArticleVectorGraphService(
 ): ArticleGraphUseCase {
     override fun getAllArticleGraph():List<VectorEdge>{
         val edges = articleVectorRepository.findAllEdgesOrderByWeightASC()
-            .map { VectorEdge(it.u,it.v,it.w) }
+            .map { VectorEdge(it.u_title,it.v_title,it.u,it.v,it.w) }
         return VectorGraph(edges).getMinimumSpanningTree()
     }
 }
