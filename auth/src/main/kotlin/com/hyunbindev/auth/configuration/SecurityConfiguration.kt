@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.HttpStatusEntryPoint
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
@@ -17,10 +20,25 @@ class SecurityConfiguration(
     private val oAuth2SuccessService: OAuth2SuccessService,
 ) {
     @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration()
+
+        configuration.allowedOrigins = listOf("http://localhost:3000")
+        configuration.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS")
+        configuration.allowedHeaders = listOf("*")
+        configuration.allowCredentials = true
+
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
+    }
+
+    @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf(){ it.disable() }
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
+            .cors { it.configurationSource(corsConfigurationSource()) }
             //accept request
             .authorizeHttpRequests{ auth->
                 auth.requestMatchers(
@@ -44,7 +62,7 @@ class SecurityConfiguration(
                     .successHandler(oAuth2SuccessService)
                     .failureUrl("/oauth2/error")
             }
-            //log out
+            //log outin
             .logout { logout->
                 logout.logoutUrl("/api/v1/auth/logout")
                     .logoutSuccessHandler{_,response,_ ->
