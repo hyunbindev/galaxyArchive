@@ -5,7 +5,8 @@ import com.hyunbindev.api.article.data.ArticleCompositionDto
 import com.hyunbindev.article.application.port.ArticleGraphUseCase
 import com.hyunbindev.article.application.port.CreateArticleUseCase
 import com.hyunbindev.article.data.article.ArticleDto
-import com.hyunbindev.article.domain.vector.VectorEdge
+import com.hyunbindev.article.data.articlegraph.ArticleGraphDto
+import com.hyunbindev.article.domain.vector.articlegraph.VectorEdge
 import com.hyunbindev.common.auth.LoginUserId
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -28,7 +29,7 @@ class ArticleController(
     }
 
     @GetMapping("/graphs")
-    fun getArticleGraph(): List<VectorEdge> {
+    fun getArticleGraph(): ArticleGraphDto {
         return articleGraphUseCase.getAllArticleGraph()
     }
 

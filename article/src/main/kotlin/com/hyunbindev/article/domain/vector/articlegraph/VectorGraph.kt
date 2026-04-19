@@ -1,4 +1,4 @@
-package com.hyunbindev.article.domain.vector
+package com.hyunbindev.article.domain.vector.articlegraph
 
 class VectorGraph(val edges:List<VectorEdge>) {
     private val parent = mutableMapOf<Long,Long>()

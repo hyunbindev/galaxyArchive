@@ -1,4 +1,4 @@
-package com.hyunbindev.article.domain.vector
+package com.hyunbindev.article.domain.vector.articlegraph
 
 data class VectorEdge(
     val u_title:String,
