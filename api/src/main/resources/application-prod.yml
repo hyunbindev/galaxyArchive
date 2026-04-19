@@ -1,0 +1,42 @@
+logging:
+  level:
+    com.hyunbindev: INFO
+  pattern:
+    console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5p) %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
+
+spring:
+  datasource:
+    url: jdbc:postgresql://galaxy-db:5432/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  kafka:
+    bootstrap-servers: galaxy-kafka:29092
+  ai:
+    ollama:
+      base-url: "http://galaxy-ollama:11434"
+      embedding:
+        options:
+          model: bge-m3
+
+cloud:
+  aws:
+    credentials:
+      access-key: ${MINIO_USER}
+      secret-key: ${MINIO_PASSWORD}
+    region:
+      static: 'ap-northeast-2'
+    s3:
+      endpoint: "http://galaxy-minio:9000"
+      bucket: 'galaxy-archive'
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
