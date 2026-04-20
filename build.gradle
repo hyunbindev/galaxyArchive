@@ -20,6 +20,10 @@ subprojects {
     apply plugin: 'org.jetbrains.kotlin.jvm'
     apply plugin: 'org.jetbrains.kotlin.plugin.spring'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+
+    bootJar { enabled = false }
+    jar { enabled = true }
 
     //자바 버전 설정 (각 서브모듈에 적용되도록 안으로 이동)
     java {
@@ -56,4 +60,10 @@ subprojects {
     tasks.named('test') {
         useJUnitPlatform()
     }
+}
+
+project(':api') {
+
+    bootJar { enabled = true }
+    jar { enabled = false }
 }
