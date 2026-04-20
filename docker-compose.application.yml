@@ -1,6 +1,6 @@
 services:
   galaxy-archive-api:
-    container-name: galaxy-archive-api
+    container_name: galaxy-archive-api
     image: ghcr.io/${REPO_LOWER}/galaxy-archive-be:latest
     restart: always
     ports:
