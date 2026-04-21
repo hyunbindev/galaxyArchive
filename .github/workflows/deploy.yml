@@ -64,8 +64,8 @@ jobs:
             
             export REPO_LOWER=$REPO_LOWER
             
-            export GITHUB_CLIENT_ID=${{ secrets.GITHUB_CLIENT_ID }}
-            export GITHUB_CLIENT_SECRET=${{ secrets.GITHUB_CLIENT_ID_SECRET }}
+            export GH_CLIENT_ID=${{ secrets.GH_CLIENT_ID }}
+            export GH_CLIENT_SECRET=${{ secrets.GH_CLIENT_ID_SECRET }}
 
             export DB_NAME=${{ secrets.DB_NAME }}
             export DB_USER=${{ secrets.DB_USER }}
