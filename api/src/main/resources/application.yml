@@ -17,6 +17,12 @@ spring:
               - user:email
               - public_repo
               - read:org
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - email
+              - profile
   kafka:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
