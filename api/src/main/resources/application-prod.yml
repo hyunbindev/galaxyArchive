@@ -4,6 +4,9 @@ logging:
   pattern:
     console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5p) %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
 
+app:
+  domain-url: ${DOMAIN_URL}
+
 spring:
   datasource:
     url: jdbc:postgresql://galaxy-db:5432/${DB_NAME}

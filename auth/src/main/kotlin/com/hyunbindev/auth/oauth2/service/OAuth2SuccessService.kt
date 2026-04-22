@@ -2,15 +2,18 @@ package com.hyunbindev.auth.oauth2.service
 
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
 import org.springframework.stereotype.Service
 
 @Service
-class OAuth2SuccessService : SimpleUrlAuthenticationSuccessHandler(){
+class OAuth2SuccessService(
+    @param:Value("\${app.frontend-url}") private val frontendUrl: String
+) : SimpleUrlAuthenticationSuccessHandler(){
 
     override fun onAuthenticationSuccess(
         request: HttpServletRequest ,response: HttpServletResponse ,authentication: Authentication) {
-        redirectStrategy.sendRedirect(request, response, "http://localhost:3000")
+        redirectStrategy.sendRedirect(request, response, frontendUrl)
     }
 }
