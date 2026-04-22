@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class OAuth2SuccessService(
-    @param:Value("\${app.frontend-url}") private val frontendUrl: String
+    @param:Value("\${app.domain-url}") private val frontendUrl: String
 ) : SimpleUrlAuthenticationSuccessHandler(){
 
     override fun onAuthenticationSuccess(

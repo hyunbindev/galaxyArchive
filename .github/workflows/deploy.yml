@@ -66,11 +66,18 @@ jobs:
             
             echo "GH_CLIENT_ID='${{ secrets.GH_CLIENT_ID }}'" >> .env
             echo "GH_CLIENT_SECRET='${{ secrets.GH_CLIENT_SECRET }}'" >> .env
+            
+            echo "GOOGLE_CLIENT_ID='${{ secrets.GOOGLE_CLIENT_ID }}'" >> .env
+            echo "GOOGLE_CLIENT_SECRET='${{ secrets.GOOGLE_CLIENT_SECRET }}'" >> .env
+            
             echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
             echo "DB_USER=${{ secrets.DB_USER }}" >> .env
             echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+            
             echo "MINIO_USER=${{ secrets.MINIO_USER }}" >> .env
             echo "MINIO_PASSWORD=${{ secrets.MINIO_PASSWORD }}" >> .env
+            
+            echo "DOMAIN_URL=${{ secrets.DOMAIN_URL }}" >> .env
             echo "REPO_LOWER=$(echo "${{ github.repository }}" | tr '[:upper:]' '[:lower:]')" >> .env
 
             docker compose -f docker-compose.application.yml pull
