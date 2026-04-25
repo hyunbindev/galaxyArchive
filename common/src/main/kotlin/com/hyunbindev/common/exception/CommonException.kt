@@ -14,9 +14,9 @@ import org.springframework.http.HttpStatus
  */
 abstract class CommonException(
     val exceptionCode: ExceptionCode,
-    override val message:String? = exceptionCode.message,
+    override val message: String? = exceptionCode.message,
     cause: Throwable? = null,
-) : RuntimeException(message?:exceptionCode.message, cause){
+) : RuntimeException(message ?: exceptionCode.message, cause) {
 
     fun getStatus(): HttpStatus = exceptionCode.status
 }
