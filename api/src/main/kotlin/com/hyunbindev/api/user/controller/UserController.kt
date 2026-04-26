@@ -18,4 +18,10 @@ class UserController(
     fun getUserSelf(@LoginUserId userId: UUID): ResponseEntity<UserInfoDto> {
         return ResponseEntity.ok(userQueryUseCase.getUser(userId))
     }
+
+    @GetMapping("/verify")
+    fun verifyUser(@LoginUserId userId: UUID): ResponseEntity<Void> {
+
+        return ResponseEntity.ok().build()
+    }
 }

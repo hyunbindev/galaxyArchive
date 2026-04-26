@@ -12,7 +12,9 @@ import java.util.UUID
 
 //TODO: Extract to common-web module
 @Component
-class LoginUserIdArgumentResolver(private val userProvider: UserProviderUseCase): HandlerMethodArgumentResolver {
+class LoginUserIdArgumentResolver(
+    private val userProvider: UserProviderUseCase
+): HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean {
         return parameter.hasParameterAnnotation(LoginUserId::class.java) && parameter.parameterType == UUID::class.java
     }
