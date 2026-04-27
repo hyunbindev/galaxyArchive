@@ -7,5 +7,5 @@ import java.io.InputStream
 import java.util.UUID
 
 interface CreateArticleImageUseCase {
-    fun upLoadArticleImage(userId: UUID, request: ImageUploadMetadata, imageStream: InputStream):String
+    fun upLoadArticleImage(userId: UUID, request: ImageUploadMetadata, imageStream: InputStream):ArticleImageDto.ImageUploadResponseDto
 }

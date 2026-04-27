@@ -1,6 +1,7 @@
 package com.hyunbindev.api.article.controller
 
 import com.hyunbindev.article.application.port.CreateArticleImageUseCase
+import com.hyunbindev.article.data.image.ArticleImageDto
 import com.hyunbindev.common.auth.LoginUserId
 import com.hyunbindev.common.image.ImageUploadMetadata
 import com.hyunbindev.common.image.RequestByteStream
@@ -23,7 +24,7 @@ class ArticleImageController(
         @LoginUserId userId: UUID,
         @UploadImageHeader metadata: ImageUploadMetadata,
         @RequestByteStream imageStream: InputStream
-    ):String{
+    ): ArticleImageDto.ImageUploadResponseDto {
         return createArticleImageUseCase.upLoadArticleImage(userId,metadata,imageStream)
     }
 }

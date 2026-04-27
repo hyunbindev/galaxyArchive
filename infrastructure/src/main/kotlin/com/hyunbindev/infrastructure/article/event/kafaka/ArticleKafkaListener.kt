@@ -1,5 +1,6 @@
 package com.hyunbindev.infrastructure.article.event.kafaka
 
+import com.hyunbindev.article.application.port.ArticleImageManageUseCase
 import com.hyunbindev.article.application.service.vector.command.ArticleVectorService
 import com.hyunbindev.article.domain.article.event.ArticleCreateEvent
 import com.hyunbindev.article.domain.article.event.ArticleEventListener
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component
 @Component
 class ArticleKafkaListener(
     private val articleVectorService: ArticleVectorService,
+    private val articleImageManageUseCase: ArticleImageManageUseCase
 ): ArticleEventListener {
     @KafkaListener(
         topics = ["article-events"],
@@ -17,5 +19,6 @@ class ArticleKafkaListener(
     )
     override fun onArticleCreated(event: ArticleCreateEvent) {
         articleVectorService.createArticleVector(event.articleId)
+        articleImageManageUseCase.linkImageToArticle(event.articleId,event.imageUuids)
     }
 }

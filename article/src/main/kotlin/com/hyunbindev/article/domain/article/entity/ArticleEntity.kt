@@ -25,6 +25,10 @@ class ArticleEntity(
 
     @Column(columnDefinition = "TEXT", nullable = false)
     val text:String,
+
+    @Column(columnDefinition = "TEXT", nullable = false)
+    val rawText:String,
+
     ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,7 +54,8 @@ class ArticleEntity(
             return ArticleEntity(
                 title = req.title,
                 authorId = authorId,
-                text = req.text
+                text = req.text,
+                rawText = req.rawText
             )
         }
     }

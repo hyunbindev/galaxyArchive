@@ -11,4 +11,8 @@ class ArticleImageDto{
         val contentType:String,
         val rawKey:String?,
     )
+    data class ImageUploadResponseDto(
+        val imageRawKey: String,
+        val imageUUID: UUID
+    )
 }

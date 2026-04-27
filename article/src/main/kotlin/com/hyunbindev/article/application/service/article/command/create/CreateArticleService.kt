@@ -18,7 +18,7 @@ internal class CreateArticleService(
     @Transactional
     override fun createArticle(userId: UUID, req: ArticleDto.CreateRequest):Long{
         val article: ArticleEntity = articleRepository.save(ArticleEntity.from(userId, req))
-        articleCreateEvent.publishCreateEvent(ArticleCreateEvent.from(article))
+        articleCreateEvent.publishCreateEvent(ArticleCreateEvent.from(article,req.imageUuids))
         return article.id!!
     }
 }

@@ -10,6 +10,8 @@ class ArticleDto {
     data class CreateRequest(
         val title: String,
         val text: String,
+        val rawText: String,
+        val imageUuids: List<UUID>
     )
 
     @Schema(description = "response article")
