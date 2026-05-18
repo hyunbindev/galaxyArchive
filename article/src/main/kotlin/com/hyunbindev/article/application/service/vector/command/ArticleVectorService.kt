@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service
 
 //TODO- 캡슐화로 internal class 로 전환 필요 interface 작성으로 의존성 역전 필요
 @Service
- class ArticleVectorService(
+class ArticleVectorService(
     private val embeddingModel : EmbeddingModel,
     private val articleVectorRepository: ArticleVectorRepository,
     private val articleRepository: ArticleRepository
