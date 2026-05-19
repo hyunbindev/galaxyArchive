@@ -11,6 +11,7 @@ import java.util.Queue
 import kotlin.collections.plus
 import kotlin.math.acos
 import kotlin.math.cos
+import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.math.sqrt
 
@@ -44,80 +45,146 @@ private fun getClusterRadius(clusterSize:Int) = sqrt(clusterSize.toDouble()) * C
 
 private fun getNodeCoordinates(edges: List<Edge>, clusters: List<Cluster>, nodes: List<Node>): Map<String, List<Node>> {
     val result = mutableMapOf<String, List<Node>>()
+    val nodeMap = nodes.associateBy { it.id }
 
-    val adj: MutableMap<Long, MutableList<Edge>> = mutableMapOf()
+    // 성단 크기(노드 개수)별 내림차순 정렬
+    val sortedClusters = clusters.sortedByDescending { it.nodeIds.size }
 
-    val nodeMap = nodes.associateBy { it.id }.toMutableMap()
-
-    edges.forEach { edge ->
-        adj.getOrPut(edge.u.id) { mutableListOf() }.add(edge)
-        adj.getOrPut(edge.v.id) { mutableListOf() }.add(edge)
-
-        if (!nodeMap.containsKey(edge.u.id)) nodeMap[edge.u.id] = edge.u
-        if (!nodeMap.containsKey(edge.v.id)) nodeMap[edge.v.id] = edge.v
+    // 1. 성단 이름별 반지름 매핑
+    val clusterRadius = sortedClusters.associate { cluster ->
+        cluster.name to (sqrt(cluster.nodeIds.size.toDouble()) * CLUSTER_RADIUS_CONST + CLUSTER_MARGIN)
     }
 
-    clusters.forEach { cluster ->
-        val nodeIds: Set<Long> = cluster.nodeIds.toSet()
+    val clusterCenters = mutableMapOf<String, Point3D>()
+    val nodePositionMap = mutableMapOf<Long, Point3D>()
+    val totalClusterSize = sortedClusters.size
 
-        if (nodeIds.isEmpty()) return@forEach
+    // 2. 제2 코사인 법칙 기반 성단 중심점 배치 (기존의 훌륭한 충돌회피 로직 유지)
+    for (i in sortedClusters.indices) {
+        val cluster = sortedClusters[i]
+        val radius = clusterRadius[cluster.name] ?: 10.0
 
-        val positionedNodeMap = mutableMapOf<Long, Node>()
-        val visited = mutableSetOf<Long>()
+        val y = if (totalClusterSize > 1) 1.0 - (i.toDouble() / (totalClusterSize - 1)) * 2.0 else 0.0
+        val radiusAtY = sqrt(kotlin.math.max(0.0, 1.0 - y * y))
+        val theta = GOLDEN_RATIO * i // 기존 황금비 상수 활용
 
-        val rootId = nodeIds.first()
-        // cluster.position은 확실히 Point3D이므로 안전함
-        positionedNodeMap[rootId] = Node(id = rootId, title = nodeMap[rootId]?.title ?: "", position = cluster.position)
-        visited.add(rootId)
+        val normalizedDir = Point3D(
+            x = cos(theta) * radiusAtY,
+            y = y,
+            z = sin(theta) * radiusAtY
+        ).normalize()
 
-        val queue: Queue<Long> = LinkedList<Long>()
-        queue.add(rootId)
+        var dist = 0.0
 
-        var branchCounter = 0
+        for (j in 0 until i) {
+            val prevCluster = sortedClusters[j]
+            val prevCenter = clusterCenters[prevCluster.name] ?: Point3D.ZERO
+            val prevRadius = clusterRadius[prevCluster.name] ?: 10.0
+            val minimumDistance = radius + prevRadius
 
-        while (queue.isNotEmpty()) {
-            val parentId = queue.poll()
-            val parentNode = positionedNodeMap[parentId]!!
+            val distanceToPrevCenter = sqrt(prevCenter.x * prevCenter.x + prevCenter.y * prevCenter.y + prevCenter.z * prevCenter.z)
+            val cosTheta = normalizedDir.dot(prevCenter.normalize())
 
-            val childrenEdges = adj[parentId]?.filter { edge ->
-                val childId = if (edge.u.id == parentId) edge.v.id else edge.u.id
-                nodeIds.contains(childId) && !visited.contains(childId)
-            } ?: emptyList()
+            val b = -2.0 * distanceToPrevCenter * cosTheta
+            val c = (distanceToPrevCenter * distanceToPrevCenter) - (minimumDistance * minimumDistance)
+            val discriminant = b * b - 4.0 * c
 
-            childrenEdges.forEach { edge ->
-                val childId = if (edge.u.id == parentId) edge.v.id else edge.u.id
-
-                branchCounter++
-                val phi = branchCounter * GOLDEN_RATIO
-                val theta = acos(1.0 - 2.0 * (branchCounter % 100 + 0.5) / 100.0)
-                val dir = Point3D(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta)).normalize()
-
-                val distance = kotlin.math.max(2.0, edge.w * 5.0)
-
-                // 부모 좌표가 null일 경우를 대비해 cluster.position을 백업으로 작동하도록 안전 마킹
-                val basePos = parentNode.position ?: cluster.position
-                val childPosition = Point3D(
-                    x = basePos.x + (dir.x * distance),
-                    y = basePos.y + (dir.y * distance),
-                    z = basePos.z + (dir.z * distance)
-                )
-
-                val childTitle = nodeMap[childId]?.title ?: ""
-                positionedNodeMap[childId] = Node(id = childId, title = childTitle, position = childPosition)
-
-                visited.add(childId)
-                queue.add(childId)
+            if (discriminant >= 0.0) {
+                val sol = (-b + sqrt(discriminant)) / 2.0
+                dist = kotlin.math.max(dist, sol)
             }
         }
 
-        nodeIds.forEach { id ->
-            if (!positionedNodeMap.containsKey(id)) {
-                positionedNodeMap[id] = Node(id = id, title = nodeMap[id]?.title ?: "", position = cluster.position)
+        clusterCenters[cluster.name] = normalizedDir * dist
+
+        // 3. 성단 내부 노드 초기 3D 구면 무작위 분사
+        val currentCenter = clusterCenters[cluster.name] ?: Point3D.ZERO
+        val maxR = sqrt(cluster.nodeIds.size.toDouble()) * 5.0
+
+        cluster.nodeIds.forEach { nodeId ->
+            val u = Math.random() * 2.0 * kotlin.math.PI
+            val v = acos(2.0 * Math.random() - 1.0)
+            val initR = maxR * Math.random().pow(1.0 / 3.0)
+
+            nodePositionMap[nodeId] = Point3D(
+                x = currentCenter.x + initR * sin(v) * cos(u),
+                y = currentCenter.y + initR * sin(v) * sin(u),
+                z = currentCenter.z + cos(v)
+            )
+        }
+
+        // 4. Relaxation (인력/척력 안정화 시뮬레이션) 트리거
+        val nodeSet = cluster.nodeIds.toSet()
+        val clusterEdges = edges.filter { nodeSet.contains(it.u.id) && nodeSet.contains(it.v.id) }
+        val iterations = 20
+
+        for (step in 0 until iterations) {
+            // [인력 연산 및 방향성 교정]
+            for (edge in clusterEdges) {
+                val pU = nodePositionMap[edge.u.id]
+                val pV = nodePositionMap[edge.v.id]
+                if (pU == null || pV == null) continue
+
+                // pU에서 pV로 향하는 델타 벡터 계산
+                val deltaX = pV.x - pU.x
+                val deltaY = pV.y - pU.y
+                val deltaZ = pV.z - pU.z
+                val currentDist = sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ)
+                if (currentDist == 0.0) continue
+
+                // 코사인 거리(w) 기반 목표 거리 설정 (가까울수록 밀착)
+                val targetDist = (edge.w + 0.1) * (maxR * 0.4)
+                val force = (currentDist - targetDist) / currentDist
+
+                // 탄성 텐션(0.3) 반영 및 방향 교정 벡터 생성
+                // (서로 멀리 있으면 당기고, 목표보다 가까우면 밀어냄)
+                val corrX = deltaX * force * 0.3
+                val corrY = deltaY * force * 0.3
+                val corrZ = deltaZ * force * 0.3
+
+                nodePositionMap[edge.u.id] = Point3D(pU.x + corrX, pU.y + corrY, pU.z + corrZ)
+                nodePositionMap[edge.v.id] = Point3D(pV.x - corrX, pV.y - corrY, pV.z - corrZ)
+            }
+
+            // [성단 외곽 탈출 방지 중력장 한계 계산]
+            cluster.nodeIds.forEach { nodeId ->
+                val pos = nodePositionMap[nodeId] ?: currentCenter
+                val offsetX = pos.x - currentCenter.x
+                val offsetY = pos.y - currentCenter.y
+                val offsetZ = pos.z - currentCenter.z
+                val dist = sqrt(offsetX * offsetX + offsetY * offsetY + offsetZ * offsetZ)
+
+                if (dist > maxR) {
+                    // 최대 반경을 벗어나면 멱살 잡고 구 표면에 강제 고정
+                    val scale = maxR / dist
+                    nodePositionMap[nodeId] = Point3D(
+                        x = currentCenter.x + offsetX * scale,
+                        y = currentCenter.y + offsetY * scale,
+                        z = currentCenter.z + offsetZ * scale
+                    )
+                } else if (dist < 1.0) {
+                    // 중심점 블랙홀 현상 방지
+                    val scale = 1.0 / dist
+                    nodePositionMap[nodeId] = Point3D(
+                        x = currentCenter.x + offsetX * scale,
+                        y = currentCenter.y + offsetY * scale,
+                        z = currentCenter.z + offsetZ * scale
+                    )
+                }
             }
         }
 
-        result[cluster.name] = positionedNodeMap.values.toList()
+        // 5. 최종 좌표 맵 변환 및 결과 빌드
+        val clusterNodes = cluster.nodeIds.map { id ->
+            Node(
+                id = id,
+                title = nodeMap[id]?.title ?: "",
+                position = nodePositionMap[id] ?: currentCenter
+            )
+        }
+        result[cluster.name] = clusterNodes
     }
+
     return result
 }
 
@@ -185,7 +252,9 @@ private fun getClusters(trees:Map<Any,List<Long>>, edges:List<Edge>):List<Cluste
 private fun getMinimumSpanningTree(edges:List<ArticleEdgeProjection>):Mst{
     val parent:MutableMap<Long,Long> = mutableMapOf()
 
-    for(edge in edges){
+    val sortedEdges = edges.sortedBy { it.w }
+
+    for(edge in sortedEdges){
         parent[edge.u]=edge.u
         parent[edge.v]=edge.v
     }
@@ -212,11 +281,11 @@ private fun getMinimumSpanningTree(edges:List<ArticleEdgeProjection>):Mst{
 
     val resultEdge:MutableList<Edge> = mutableListOf()
 
-    for(edge in edges){
+    for(edge in sortedEdges){
         if(union(edge.u,edge.v)){
             val uNode = Node(edge.u,edge.u_title)
             val vNode = Node(edge.v,edge.v_title)
-            resultEdge.add(Edge(uNode,vNode,edge.w))
+            resultEdge.add(Edge(uNode,vNode,edge.w*10+1))
         }
     }
 

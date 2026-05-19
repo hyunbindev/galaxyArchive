@@ -33,7 +33,7 @@ data class Point3D(
 data class Node(
     val id: Long,
     val title: String,
-    val position:Point3D?=null,
+    val position:Point3D? = null
 )
 
 data class Cluster(
