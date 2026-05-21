@@ -26,10 +26,11 @@ interface ArticleVectorRepository : JpaRepository<ArticleVectorEntity, Long> {
 
 }
 
+
 interface ArticleEdgeProjection{
     val u_title: String
     val v_title: String
-    val u:Long
-    val v:Long
-    val w:Float
+    val u: Long
+    val v: Long
+    val w: Float
 }
