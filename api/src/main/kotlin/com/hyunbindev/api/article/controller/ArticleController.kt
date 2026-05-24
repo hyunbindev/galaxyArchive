@@ -4,14 +4,17 @@ import com.hyunbindev.api.article.composition.ArticleQueryComposition
 import com.hyunbindev.api.article.data.ArticleCompositionDto
 import com.hyunbindev.article.application.port.ArticleGraphUseCase
 import com.hyunbindev.article.application.port.CreateArticleUseCase
+import com.hyunbindev.article.application.port.DeleteArticleUseCase
 import com.hyunbindev.article.data.article.ArticleDto
 import com.hyunbindev.article.data.articlegraph.ArticleGraphDto
 import com.hyunbindev.common.auth.LoginUserId
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
@@ -21,6 +24,7 @@ class ArticleController(
     private val createArticleUseCase: CreateArticleUseCase,
     private val articleGraphUseCase: ArticleGraphUseCase,
     private val articleQueryComposition: ArticleQueryComposition,
+    private val articleDeleteUseCase: DeleteArticleUseCase,
 ) {
     @PostMapping
     fun createArticle(@LoginUserId userId: UUID, @RequestBody req: ArticleDto.CreateRequest):Long{
@@ -35,5 +39,10 @@ class ArticleController(
     @GetMapping("/{articleId}")
     fun getArticle(@PathVariable articleId: Long): ArticleCompositionDto {
         return articleQueryComposition.getArticle(articleId)
+    }
+
+    @DeleteMapping("/{articleId}")
+    fun deleteArticle(@LoginUserId userId:UUID, @PathVariable articleId: Long, @RequestParam articleTitle:String) {
+        articleDeleteUseCase.deleteArticle(userId, articleId, articleTitle)
     }
 }

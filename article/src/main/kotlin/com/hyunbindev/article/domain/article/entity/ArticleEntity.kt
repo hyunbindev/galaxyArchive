@@ -59,4 +59,7 @@ class ArticleEntity(
             )
         }
     }
+    fun delete(){
+        isDeleted = true
+    }
 }

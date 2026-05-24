@@ -17,8 +17,8 @@ interface ArticleVectorRepository : JpaRepository<ArticleVectorEntity, Long> {
                     u_vector.vector <=> v_vector.vector AS w
                 FROM article_vector_entity u_vector
                 JOIN article_vector_entity v_vector ON u_vector.article_id < v_vector.article_id
-                JOIN article_entity u_article ON u_article.id = u_vector.article_id
-                JOIN article_entity v_article ON v_article.id = v_vector.article_id
+                JOIN article_entity u_article ON u_article.id = u_vector.article_id AND u_article.is_deleted = false
+                JOIN article_entity v_article ON v_article.id = v_vector.article_id AND v_article.is_deleted = false
                 WHERE u_vector.vector <=> v_vector.vector < 0.4
                 ORDER BY w ASC;
                """, nativeQuery = true)
