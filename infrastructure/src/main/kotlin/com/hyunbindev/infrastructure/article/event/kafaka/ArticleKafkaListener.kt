@@ -1,16 +1,16 @@
 package com.hyunbindev.infrastructure.article.event.kafaka
 
-import com.hyunbindev.article.application.port.ArticleImageManageUseCase
-import com.hyunbindev.article.application.service.vector.command.ArticleVectorService
-import com.hyunbindev.article.domain.article.event.ArticleCreateEvent
-import com.hyunbindev.article.domain.article.event.ArticleEventListener
+import com.hyunbindev.article.image.port.`in`.ArticleImageManageUseCase
+import com.hyunbindev.article.article.data.ArticleCreateEvent
+import com.hyunbindev.article.article.port.`in`.ArticleEventListener
+import com.hyunbindev.article.embedding.port.`in`.CreateArticleVectorUseCase
 
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
 
 @Component
 class ArticleKafkaListener(
-    private val articleVectorService: ArticleVectorService,
+    private val createArticleVectorUseCase: CreateArticleVectorUseCase,
     private val articleImageManageUseCase: ArticleImageManageUseCase
 ): ArticleEventListener {
     @KafkaListener(
@@ -18,7 +18,7 @@ class ArticleKafkaListener(
         groupId = "vector-group",
     )
     override fun onArticleCreated(event: ArticleCreateEvent) {
-        articleVectorService.createArticleVector(event.articleId)
+        createArticleVectorUseCase.createArticleVector(event.articleId)
         articleImageManageUseCase.linkImageToArticle(event.articleId,event.imageUuids)
     }
 }

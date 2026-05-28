@@ -2,11 +2,11 @@ package com.hyunbindev.api.article.controller
 
 import com.hyunbindev.api.article.composition.ArticleQueryComposition
 import com.hyunbindev.api.article.data.ArticleCompositionDto
-import com.hyunbindev.article.application.port.ArticleGraphUseCase
-import com.hyunbindev.article.application.port.CreateArticleUseCase
-import com.hyunbindev.article.application.port.DeleteArticleUseCase
-import com.hyunbindev.article.data.article.ArticleDto
-import com.hyunbindev.article.data.articlegraph.ArticleGraphDto
+import com.hyunbindev.article.embedding.port.`in`.ArticleGraphUseCase
+import com.hyunbindev.article.article.port.`in`.CreateArticleUseCase
+import com.hyunbindev.article.article.port.`in`.DeleteArticleUseCase
+import com.hyunbindev.article.article.data.ArticleDto
+import com.hyunbindev.article.embedding.data.ArticleGraphDto
 import com.hyunbindev.common.auth.LoginUserId
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping

@@ -1,7 +1,7 @@
 package com.hyunbindev.api.user.controller
 
 import com.hyunbindev.common.auth.LoginUserId
-import com.hyunbindev.user.application.port.UserQueryUseCase
+import com.hyunbindev.user.port.`in`.UserQueryUseCase
 import com.hyunbindev.user.data.UserInfoDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

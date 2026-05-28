@@ -1,9 +1,9 @@
 package com.hyunbindev.auth.oauth2.service
 
 import com.hyunbindev.auth.oauth2.model.OAuth2UserPrincipalImpl
-import com.hyunbindev.user.application.port.UserQueryUseCase
-import com.hyunbindev.user.application.port.UserSignupUseCase
-import com.hyunbindev.user.application.port.UserUpdateUseCase
+import com.hyunbindev.user.port.`in`.UserQueryUseCase
+import com.hyunbindev.user.port.`in`.UserSignupUseCase
+import com.hyunbindev.user.port.`in`.UserUpdateUseCase
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest
 import org.springframework.security.oauth2.core.user.OAuth2User

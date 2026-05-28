@@ -1,7 +1,7 @@
 package com.hyunbindev.user.data
 
 import com.hyunbindev.common.constant.oauth2.OAuth2Provider
-import com.hyunbindev.user.entity.UserEntity
+import com.hyunbindev.user.domain.UserEntity
 import org.springframework.boot.autoconfigure.security.SecurityProperties
 import java.util.UUID
 
