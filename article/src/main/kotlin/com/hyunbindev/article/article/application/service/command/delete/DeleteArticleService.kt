@@ -1,4 +1,4 @@
-package com.hyunbindev.article.article.adapter.`in`.command.delete
+package com.hyunbindev.article.article.application.service.command.delete
 
 import com.hyunbindev.article.article.port.`in`.DeleteArticleUseCase
 import com.hyunbindev.article.article.domain.ArticleEntity

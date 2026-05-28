@@ -1,4 +1,4 @@
-package com.hyunbindev.article.article.adapter.`in`.command.create
+package com.hyunbindev.article.article.application.service.command.create
 
 import com.hyunbindev.article.article.port.`in`.CreateArticleUseCase
 import com.hyunbindev.article.article.data.ArticleDto

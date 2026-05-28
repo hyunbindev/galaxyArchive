@@ -1,4 +1,4 @@
-package com.hyunbindev.user.adapter.`in`.query
+package com.hyunbindev.user.application.service.query
 
 import com.hyunbindev.common.constant.oauth2.OAuth2Provider
 import com.hyunbindev.user.port.`in`.UserQueryUseCase

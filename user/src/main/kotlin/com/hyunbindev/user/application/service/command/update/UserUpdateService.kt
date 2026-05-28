@@ -1,4 +1,4 @@
-package com.hyunbindev.user.adapter.`in`.command.update
+package com.hyunbindev.user.application.service.command.update
 
 import com.hyunbindev.user.port.`in`.UserUpdateUseCase
 import com.hyunbindev.user.data.UserInfoDto

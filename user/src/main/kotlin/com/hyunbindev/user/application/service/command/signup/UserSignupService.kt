@@ -1,4 +1,4 @@
-package com.hyunbindev.user.adapter.`in`.command.signup
+package com.hyunbindev.user.application.service.command.signup
 
 import com.hyunbindev.user.port.`in`.UserSignupUseCase
 import com.hyunbindev.user.data.UserInfoDto

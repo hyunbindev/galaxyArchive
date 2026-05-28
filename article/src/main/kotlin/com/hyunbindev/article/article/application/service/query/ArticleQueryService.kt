@@ -1,4 +1,4 @@
-package com.hyunbindev.article.article.adapter.`in`.query
+package com.hyunbindev.article.article.application.service.query
 
 import com.hyunbindev.article.article.port.`in`.ArticleQueryUseCase
 import com.hyunbindev.article.article.data.ArticleDto
