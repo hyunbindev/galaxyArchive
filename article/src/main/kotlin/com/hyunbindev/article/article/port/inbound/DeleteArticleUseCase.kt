@@ -1,4 +1,4 @@
-package com.hyunbindev.article.article.port.`in`
+package com.hyunbindev.article.article.port.inbound
 
 import java.util.UUID
 

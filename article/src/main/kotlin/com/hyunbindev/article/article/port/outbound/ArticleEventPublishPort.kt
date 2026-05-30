@@ -1,7 +1,7 @@
-package com.hyunbindev.article.article.port.out
+package com.hyunbindev.article.article.port.outbound
 
 import com.hyunbindev.article.article.data.ArticleCreateEvent
 
-interface ArticleEventPublisher {
+interface ArticleEventPublishPort {
     fun publishCreateEvent(event: ArticleCreateEvent)
 }

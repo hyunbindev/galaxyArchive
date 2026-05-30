@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @Configuration
 @EntityScan(basePackages = ["com.hyunbindev.user.domain"])
-@EnableJpaRepositories(basePackages = ["com.hyunbindev.user.adapter.out"])
+@EnableJpaRepositories(basePackages = ["com.hyunbindev.user.adapter.outbound"])
 class UserJpaConfiguration {
 }

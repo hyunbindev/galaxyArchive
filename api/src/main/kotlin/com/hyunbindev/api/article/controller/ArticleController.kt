@@ -3,8 +3,8 @@ package com.hyunbindev.api.article.controller
 import com.hyunbindev.api.article.composition.ArticleQueryComposition
 import com.hyunbindev.api.article.data.ArticleCompositionDto
 import com.hyunbindev.article.embedding.port.`in`.ArticleGraphUseCase
-import com.hyunbindev.article.article.port.`in`.CreateArticleUseCase
-import com.hyunbindev.article.article.port.`in`.DeleteArticleUseCase
+import com.hyunbindev.article.article.port.inbound.CreateArticleUseCase
+import com.hyunbindev.article.article.port.inbound.DeleteArticleUseCase
 import com.hyunbindev.article.article.data.ArticleDto
 import com.hyunbindev.article.embedding.data.ArticleGraphDto
 import com.hyunbindev.common.auth.LoginUserId

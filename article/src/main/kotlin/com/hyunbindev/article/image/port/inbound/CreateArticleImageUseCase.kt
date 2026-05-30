@@ -1,4 +1,4 @@
-package com.hyunbindev.article.image.port.`in`
+package com.hyunbindev.article.image.port.inbound
 
 import com.hyunbindev.article.image.data.ArticleImageDto
 import com.hyunbindev.common.image.ImageUploadMetadata

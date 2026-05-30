@@ -1,11 +1,11 @@
 package com.hyunbindev.user.application.service.query
 
 import com.hyunbindev.common.constant.oauth2.OAuth2Provider
-import com.hyunbindev.user.port.`in`.UserQueryUseCase
+import com.hyunbindev.user.port.inbound.UserQueryUseCase
 import com.hyunbindev.user.data.UserInfoDto
 import com.hyunbindev.user.global.exception.UserException
 import com.hyunbindev.user.global.exception.constant.UserExceptionCode
-import com.hyunbindev.user.adapter.out.UserRepository
+import com.hyunbindev.user.adapter.outbound.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID

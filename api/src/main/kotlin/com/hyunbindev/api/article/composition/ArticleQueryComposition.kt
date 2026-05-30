@@ -1,9 +1,9 @@
 package com.hyunbindev.api.article.composition
 
 import com.hyunbindev.api.article.data.ArticleCompositionDto
-import com.hyunbindev.article.article.port.`in`.ArticleQueryUseCase
+import com.hyunbindev.article.article.port.inbound.ArticleQueryUseCase
 import com.hyunbindev.article.article.data.ArticleDto
-import com.hyunbindev.user.port.`in`.UserQueryUseCase
+import com.hyunbindev.user.port.inbound.UserQueryUseCase
 import com.hyunbindev.user.data.UserInfoDto
 import org.springframework.stereotype.Service
 

@@ -1,7 +1,7 @@
-package com.hyunbindev.infrastructure.article.event.kafaka
+package com.hyunbindev.infrastructure.article.event.kafka
 
 import com.hyunbindev.article.article.data.ArticleCreateEvent
-import com.hyunbindev.article.article.port.out.ArticleEventPublisher
+import com.hyunbindev.article.article.port.outbound.ArticleEventPublishPort
 import org.slf4j.LoggerFactory
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component
@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
 @Component
 class ArticleKafkaPublisher(
     private val kafkaTemplate: KafkaTemplate<String, ArticleCreateEvent>
-): ArticleEventPublisher {
+): ArticleEventPublishPort {
     private val logger = LoggerFactory.getLogger(ArticleKafkaPublisher::class.java)
     override fun publishCreateEvent(event: ArticleCreateEvent) {
         try {

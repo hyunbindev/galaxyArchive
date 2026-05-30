@@ -1,7 +1,6 @@
 package com.hyunbindev.article.article.domain
 
 import com.hyunbindev.article.article.data.ArticleDto
-import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.EntityListeners
@@ -17,7 +16,6 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 @Entity
-@Schema(description = "response user info")
 @EntityListeners(AuditingEntityListener::class)
 class ArticleEntity(
     @Column(nullable = false)

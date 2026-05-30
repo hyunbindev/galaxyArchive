@@ -1,6 +1,6 @@
 package com.hyunbindev.article.image.adapter.`in`.command
 
-import com.hyunbindev.article.image.port.`in`.ArticleImageManageUseCase
+import com.hyunbindev.article.image.port.inbound.ArticleImageManageUseCase
 import com.hyunbindev.article.image.adapter.out.ArticleImageRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

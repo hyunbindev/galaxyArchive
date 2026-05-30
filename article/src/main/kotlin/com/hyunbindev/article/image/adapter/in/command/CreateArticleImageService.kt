@@ -1,6 +1,6 @@
 package com.hyunbindev.article.image.adapter.`in`.command
 
-import com.hyunbindev.article.image.port.`in`.CreateArticleImageUseCase
+import com.hyunbindev.article.image.port.inbound.CreateArticleImageUseCase
 import com.hyunbindev.article.image.data.ArticleImageDto
 import com.hyunbindev.article.image.domain.ArticleImageEntity
 import com.hyunbindev.article.image.adapter.out.ArticleImageUpload

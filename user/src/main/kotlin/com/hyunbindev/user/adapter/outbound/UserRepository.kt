@@ -1,4 +1,4 @@
-package com.hyunbindev.user.adapter.out
+package com.hyunbindev.user.adapter.outbound
 
 import com.hyunbindev.common.constant.oauth2.OAuth2Provider
 import com.hyunbindev.user.domain.UserEntity

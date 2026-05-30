@@ -1,9 +1,9 @@
 package com.hyunbindev.user.application.service.command.signup
 
-import com.hyunbindev.user.port.`in`.UserSignupUseCase
+import com.hyunbindev.user.port.inbound.UserSignupUseCase
 import com.hyunbindev.user.data.UserInfoDto
 import com.hyunbindev.user.domain.UserEntity
-import com.hyunbindev.user.adapter.out.UserRepository
+import com.hyunbindev.user.adapter.outbound.UserRepository
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

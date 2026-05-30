@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
      "com.hyunbindev.article.comment.domain",
     ])
 @EnableJpaRepositories(basePackages =
-    ["com.hyunbindev.article.article.adapter.out",
+    ["com.hyunbindev.article.article.adapter.outbound",
      "com.hyunbindev.article.embedding.adapter.out",
      "com.hyunbindev.article.image.adapter.out",
      "com.hyunbindev.article.comment.adapter.out",

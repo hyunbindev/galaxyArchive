@@ -1,6 +1,6 @@
 package com.hyunbindev.api.article.controller
 
-import com.hyunbindev.article.image.port.`in`.CreateArticleImageUseCase
+import com.hyunbindev.article.image.port.inbound.CreateArticleImageUseCase
 import com.hyunbindev.article.image.data.ArticleImageDto
 import com.hyunbindev.common.auth.LoginUserId
 import com.hyunbindev.common.image.ImageUploadMetadata

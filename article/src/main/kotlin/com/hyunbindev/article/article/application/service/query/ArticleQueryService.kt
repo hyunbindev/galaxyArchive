@@ -1,8 +1,8 @@
 package com.hyunbindev.article.article.application.service.query
 
-import com.hyunbindev.article.article.port.`in`.ArticleQueryUseCase
+import com.hyunbindev.article.article.port.inbound.ArticleQueryUseCase
 import com.hyunbindev.article.article.data.ArticleDto
-import com.hyunbindev.article.article.adapter.out.ArticleRepository
+import com.hyunbindev.article.article.adapter.outbound.ArticleRepository
 import com.hyunbindev.article.global.exception.ArticleException
 import com.hyunbindev.article.global.exception.constant.ArticleExceptionCode
 import org.springframework.stereotype.Service
