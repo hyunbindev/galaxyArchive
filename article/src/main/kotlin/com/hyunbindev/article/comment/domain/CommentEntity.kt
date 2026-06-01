@@ -22,15 +22,14 @@ class CommentEntity(
     @Column(nullable = false)
     val articleId: Long,
 
-    ) {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long? = null
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id", nullable = true)
     var parent: CommentEntity?=null
-        private set
+    ) {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0L
 
     @Column(nullable = false, updatable = false)
     var created: LocalDateTime = LocalDateTime.now()

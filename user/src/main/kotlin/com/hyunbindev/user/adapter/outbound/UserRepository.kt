@@ -16,4 +16,7 @@ interface UserRepository : JpaRepository<UserEntity, UUID> {
 
     @Query("SELECT u FROM UserEntity u WHERE u.id = :id")
     fun findUserById(@Param("id")uuid: UUID): UserEntity?
+
+    @Query("SELECT u FROM UserEntity u WHERE u.id in :ids")
+    fun findUserByIds(@Param("ids")ids:List<UUID>): List<UserEntity>
 }

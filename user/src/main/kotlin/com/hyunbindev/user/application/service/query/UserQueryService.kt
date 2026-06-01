@@ -31,4 +31,10 @@ internal class UserQueryService(
             ?: throw UserException(UserExceptionCode.USER_NOT_FOUND)
         return UserInfoDto.from(user)
     }
+
+    override fun getUsers(userUuids: List<UUID>): Map<UUID,UserInfoDto> {
+        val users = userRepository.findUserByIds(userUuids)
+
+        return users.associate { userEntity -> userEntity.id to UserInfoDto.from(userEntity) }
+    }
 }

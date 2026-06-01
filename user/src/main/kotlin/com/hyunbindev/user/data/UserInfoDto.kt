@@ -23,5 +23,9 @@ data class UserInfoDto(
                 profileImageUrl = entity.profileImageUrl,
             )
         }
+
+        fun fallback():UserInfoDto{
+            return UserInfoDto()
+        }
     }
 }

@@ -8,4 +8,5 @@ interface UserQueryUseCase {
     fun isUser(provider: OAuth2Provider,providerId:String):Boolean
     fun getUser(provider: OAuth2Provider,providerId:String):UserInfoDto
     fun getUser(userUuid: UUID):UserInfoDto
+    fun getUsers(userUuids:List<UUID>): Map<UUID, UserInfoDto>
 }

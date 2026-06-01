@@ -19,4 +19,6 @@ internal class ArticleQueryService(
 
         return ArticleDto.Response.from(article)
     }
+    @Transactional(readOnly = true)
+    override fun isArticleExist(id:Long):Boolean = articleRepository.existsById(id)
 }
