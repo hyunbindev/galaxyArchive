@@ -20,7 +20,8 @@ internal class ArticleCommentQueryService(
                 authorId = it.authorId,
                 createdAt = it.created,
                 text = it.text,
-                parentId = it.parent?.id
+                parentId = it.parent?.id,
+                isDeleted = it.isDeleted
             )
         }
 

@@ -8,5 +8,6 @@ data class ArticleCommentDto(
     val authorId: UUID,
     val createdAt: LocalDateTime,
     val text: String,
-    val parentId: Long?
+    val parentId: Long?,
+    val isDeleted: Boolean
 )

@@ -13,7 +13,8 @@ data class ArticleCommentCompositionDto(
     val id: Long,
     val author: UserInfoDto,
     val createdAt: LocalDateTime,
-    val text: String
+    val text: String,
+    val isDeleted: Boolean
 ){
     val children: MutableList<ArticleCommentCompositionDto> = mutableListOf()
 
@@ -23,7 +24,8 @@ data class ArticleCommentCompositionDto(
                 id = articleCommentDto.id,
                 author = author,
                 createdAt = articleCommentDto.createdAt,
-                text = articleCommentDto.text,
+                text = if (articleCommentDto.isDeleted) "" else articleCommentDto.text,
+                isDeleted = articleCommentDto.isDeleted
             )
         }
     }

@@ -10,6 +10,11 @@ interface CommentRepository : JpaRepository<CommentEntity, Long> {
     @Query("SELECT a FROM CommentEntity a WHERE a.id=:id AND a.isDeleted = false")
     fun findArticleCommentById(id: Long): CommentEntity?
 
-    @Query("SELECT c From CommentEntity c WHERE c.isDeleted = false AND c.articleId = :articleId ORDER BY c.created DESC")
+    @Query("""
+        SELECT c From CommentEntity c
+        WHERE c.articleId = :articleId
+        AND NOT (c.parent IS NOT NULL AND c.isDeleted = true)
+        ORDER BY c.created DESC
+        """)
     fun findCommentListByArticleId(articleId:Long): List<CommentEntity>
 }

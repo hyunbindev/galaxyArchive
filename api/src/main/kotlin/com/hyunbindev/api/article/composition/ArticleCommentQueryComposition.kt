@@ -1,7 +1,6 @@
 package com.hyunbindev.api.article.composition
 
 import com.hyunbindev.api.article.data.ArticleCommentCompositionDto
-import com.hyunbindev.article.comment.data.ArticleCommentDto
 import com.hyunbindev.article.comment.port.inbound.ArticleCommentQueryUseCase
 import com.hyunbindev.user.data.UserInfoDto
 import com.hyunbindev.user.port.inbound.UserQueryUseCase
@@ -18,14 +17,28 @@ class ArticleCommentQueryComposition(
 
         if(comments.isEmpty()) return emptyList()
 
-        val userUuids = comments.map { it.authorId }.distinct()
+        //author 요청시 삭제된 덧글은 제외 및 중복 제거
+        val userUuids = comments
+            .filter { !it.isDeleted }
+            .map { it.authorId }
+            .distinct()
+
+        // request author info
         val userMap = userQueryUseCase.getUsers(userUuids)
 
+        // comment author info mapping
         val commentCompositionMap = comments.associate { dto ->
-            val authorDto = userMap[dto.authorId] ?: UserInfoDto.fallback()
+
+            val authorDto: UserInfoDto = if(dto.isDeleted) {
+                UserInfoDto.fallback()
+            }else {
+                userMap[dto.authorId] ?: UserInfoDto.fallback()
+            }
+
             dto.id to ArticleCommentCompositionDto.of(authorDto, dto)
         }
 
+        // recomment mapping
         val rootComments = mutableListOf<ArticleCommentCompositionDto>()
         comments.forEach { dto ->
             val currentComposition = commentCompositionMap[dto.id]!!
@@ -37,6 +50,10 @@ class ArticleCommentQueryComposition(
                 parentComposition?.children?.add(currentComposition)
             }
         }
-        return rootComments
+
+        // filtering no children comments and parent is deleted case
+        val filteredRootComments = rootComments.filterNot { it.children.isEmpty() && it.isDeleted }
+
+        return filteredRootComments
     }
 }

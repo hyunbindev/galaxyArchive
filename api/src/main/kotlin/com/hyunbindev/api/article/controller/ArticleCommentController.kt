@@ -4,8 +4,10 @@ import com.hyunbindev.api.article.composition.ArticleCommentQueryComposition
 import com.hyunbindev.api.article.data.ArticleCommentCompositionDto
 import com.hyunbindev.api.article.data.ArticleCreateRequestDto
 import com.hyunbindev.article.comment.port.inbound.ArticleCommentCreateUseCase
+import com.hyunbindev.article.comment.port.inbound.ArticleCommentDeleteUseCase
 import com.hyunbindev.common.auth.LoginUserId
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -20,6 +22,7 @@ import java.util.UUID
 @RequestMapping("/api/v1/articles/{articleId}/comments")
 class ArticleCommentController(
     private val articleCommentCreateUseCase: ArticleCommentCreateUseCase,
+    private val articleCommentDeleteUseCase: ArticleCommentDeleteUseCase,
     private val articleCommentQueryComposition: ArticleCommentQueryComposition
 ) {
 
@@ -40,5 +43,11 @@ class ArticleCommentController(
     @ResponseStatus(HttpStatus.CREATED)
     fun getComments(@PathVariable articleId:Long):List<ArticleCommentCompositionDto>{
         return articleCommentQueryComposition.getArticleComment(articleId)
+    }
+
+    @DeleteMapping("/{commentId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteComment(@LoginUserId userId:UUID, @PathVariable commentId:Long){
+        articleCommentDeleteUseCase.deleteComment(userId, commentId)
     }
 }
