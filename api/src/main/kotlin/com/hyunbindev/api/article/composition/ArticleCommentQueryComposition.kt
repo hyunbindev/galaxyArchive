@@ -12,6 +12,7 @@ class ArticleCommentQueryComposition(
     private val userQueryUseCase: UserQueryUseCase,
     private val articleCommentQueryUseCase: ArticleCommentQueryUseCase,
 ) {
+    //TODO-삭제 및 답글 필터링 도메인 로직은 article module 안으로 이관
     fun getArticleComment(articleId:Long): List<ArticleCommentCompositionDto> {
         val comments = articleCommentQueryUseCase.getCommentsByArticleId(articleId)
 
