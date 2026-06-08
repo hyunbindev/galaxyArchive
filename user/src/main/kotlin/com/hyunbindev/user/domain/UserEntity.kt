@@ -7,10 +7,15 @@ import jakarta.persistence.Entity
 import jakarta.persistence.EnumType
 import jakarta.persistence.Enumerated
 import jakarta.persistence.Id
+import jakarta.persistence.PostLoad
+import jakarta.persistence.PostPersist
 import jakarta.persistence.Table
+import jakarta.persistence.Transient
 import jakarta.persistence.UniqueConstraint
+import jakarta.transaction.Transactional
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
+import org.springframework.data.domain.Persistable
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -36,10 +41,10 @@ class UserEntity(
 
     @Column(nullable = true)
     var email: String? = null
-) {
+): Persistable<UUID> {
     @Id
-    @Column(columnDefinition = "UUID", nullable = false)
-    val id: UUID = UUID.randomUUID()
+    @Column(name="id",columnDefinition = "UUID", nullable = false)
+    val userId: UUID = UUID.randomUUID()
 
     @Column(nullable = false)
     var deleted: Boolean = false
@@ -54,6 +59,19 @@ class UserEntity(
 
     @Column(nullable = false)
     var lastLoginAt: LocalDateTime? = LocalDateTime.now()
+
+    @Transient
+    var isNewRecord:Boolean = false
+
+    override fun getId(): UUID? = this.userId
+
+    override fun isNew(): Boolean = isNewRecord
+
+    @PostPersist
+    @PostLoad
+    private fun markNotNew(){
+        this.isNewRecord = false
+    }
 
     companion object{
         fun from(userInfoDto: UserInfoDto):UserEntity{

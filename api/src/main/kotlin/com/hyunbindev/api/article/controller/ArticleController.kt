@@ -6,6 +6,8 @@ import com.hyunbindev.article.embedding.port.`in`.ArticleGraphUseCase
 import com.hyunbindev.article.article.port.inbound.CreateArticleUseCase
 import com.hyunbindev.article.article.port.inbound.DeleteArticleUseCase
 import com.hyunbindev.article.article.data.ArticleDto
+import com.hyunbindev.article.article.data.ArticleSummaryPageDto
+import com.hyunbindev.article.article.port.inbound.ArticleQueryUseCase
 import com.hyunbindev.article.embedding.data.ArticleGraphDto
 import com.hyunbindev.common.auth.LoginUserId
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -25,6 +27,7 @@ class ArticleController(
     private val articleGraphUseCase: ArticleGraphUseCase,
     private val articleQueryComposition: ArticleQueryComposition,
     private val articleDeleteUseCase: DeleteArticleUseCase,
+    private val articleQueryUseCase: ArticleQueryUseCase,
 ) {
     @PostMapping
     fun createArticle(@LoginUserId userId: UUID, @RequestBody req: ArticleDto.CreateRequest):Long{
@@ -45,4 +48,6 @@ class ArticleController(
     fun deleteArticle(@LoginUserId userId:UUID, @PathVariable articleId: Long, @RequestParam articleTitle:String) {
         articleDeleteUseCase.deleteArticle(userId, articleId, articleTitle)
     }
+
+
 }
