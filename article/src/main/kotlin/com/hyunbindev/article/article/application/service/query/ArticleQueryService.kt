@@ -6,6 +6,7 @@ import com.hyunbindev.article.article.adapter.outbound.ArticleRepository
 import com.hyunbindev.article.article.adapter.outbound.ArticleSummary
 import com.hyunbindev.article.article.data.ArticleSummaryDto
 import com.hyunbindev.article.article.data.ArticleSummaryPageDto
+import com.hyunbindev.article.article.port.inbound.ArticleStatsQueryUseCase
 import com.hyunbindev.article.global.exception.ArticleException
 import com.hyunbindev.article.global.exception.constant.ArticleExceptionCode
 import org.springframework.stereotype.Service
@@ -15,7 +16,8 @@ import java.util.UUID
 @Service
 internal class ArticleQueryService(
     private val articleRepository: ArticleRepository,
-): ArticleQueryUseCase {
+): ArticleQueryUseCase, ArticleStatsQueryUseCase {
+
     @Transactional(readOnly = true)
     override fun getArticle(id:Long): ArticleDto.Response{
         val article = articleRepository.findArticleById(id)?:
@@ -24,9 +26,8 @@ internal class ArticleQueryService(
         return ArticleDto.Response.from(article)
     }
 
-    @Transactional(readOnly = true)
-    override fun isArticleExist(id:Long):Boolean = articleRepository.existsById(id)
 
+    @Transactional(readOnly = true)
     override fun getArticleSummaryPageByCursorAndAuthor(authorId: UUID, cursorArticleId: Long?, size: Int): ArticleSummaryPageDto {
         val articleSummary:List<ArticleSummary> = articleRepository
             .findByArticleSummaryByUserIdByCursor(authorId = authorId, cursorId = cursorArticleId , size = size+1 , textLength = 100)
@@ -42,4 +43,10 @@ internal class ArticleQueryService(
             cursorArticleId = articleSummaryDtoList.lastOrNull()?.id
         )
     }
+
+    @Transactional(readOnly = true)
+    override fun getArticleCountByAuthorId(authorId: UUID): Int = articleRepository.countByAuthorId(authorId)
+
+    @Transactional(readOnly = true)
+    override fun isArticleExist(id:Long):Boolean = articleRepository.existsById(id)
 }

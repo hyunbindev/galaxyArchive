@@ -26,12 +26,6 @@ class UserProfileEntity(
 
     var bio: String = ""
 
-    var articleCount: Int = 0
-
-    var connectionCount: Int = 0
-
-    var clusterCount: Int = 0
-
     @Transient
     private var isNewRecord: Boolean = true
 

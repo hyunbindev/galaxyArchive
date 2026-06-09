@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 
 
 @Service
-class ArticleCommentQueryComposition(
+class ArticleCommentComposition(
     private val userQueryUseCase: UserQueryUseCase,
     private val articleCommentQueryUseCase: ArticleCommentQueryUseCase,
 ) {

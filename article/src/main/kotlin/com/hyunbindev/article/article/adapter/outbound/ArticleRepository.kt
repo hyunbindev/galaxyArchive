@@ -27,9 +27,23 @@ interface ArticleRepository : JpaRepository<ArticleEntity, Long> {
         AND (:cursorId IS NULL OR a.id < :cursorId)
         ORDER BY a.created_at DESC
         LIMIT :size
-    """,nativeQuery = true)
-    fun findByArticleSummaryByUserIdByCursor(size:Int, cursorId:Long?, authorId: UUID, textLength:Int):List<ArticleSummary>
+    """, nativeQuery = true
+    )
+    fun findByArticleSummaryByUserIdByCursor(
+        size: Int,
+        cursorId: Long?,
+        authorId: UUID,
+        textLength: Int
+    ): List<ArticleSummary>
+
+    @Query("""
+        SELECT count(article) FROM ArticleEntity article 
+        WHERE article.authorId=:authorId
+        AND article.isDeleted = false
+    """)
+    fun countByAuthorId(authorId: UUID): Int
 }
+
 interface ArticleSummary {
     val id: Long
     val title: String

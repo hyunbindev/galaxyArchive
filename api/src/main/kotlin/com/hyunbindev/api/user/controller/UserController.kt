@@ -1,5 +1,7 @@
 package com.hyunbindev.api.user.controller
 
+import com.hyunbindev.api.user.composition.UserProfileComposition
+import com.hyunbindev.api.user.data.UserProfileDto
 import com.hyunbindev.article.article.data.ArticleSummaryPageDto
 import com.hyunbindev.article.article.port.inbound.ArticleQueryUseCase
 import com.hyunbindev.common.auth.LoginUserId
@@ -18,9 +20,10 @@ import java.util.UUID
 class UserController(
     private val userQueryUseCase: UserQueryUseCase,
     private val articleQueryUseCase: ArticleQueryUseCase,
+    private val userProfileComposition: UserProfileComposition,
 ) {
     @GetMapping("/me")
-    fun getUserSelf(@LoginUserId userId: UUID):UserInfoDto {
+    fun getUserSelf(@LoginUserId userId: UUID): UserInfoDto {
         return userQueryUseCase.getUser(userId)
     }
 
@@ -30,7 +33,16 @@ class UserController(
     }
 
     @GetMapping("/{userId}/articles")
-    fun getArticleByUser(@PathVariable userId:UUID, @RequestParam(required = false) size:Int?, @RequestParam(required = false)lastArticleId:Long?): ArticleSummaryPageDto {
-        return articleQueryUseCase.getArticleSummaryPageByCursorAndAuthor(userId,lastArticleId, size?:10)
+    fun getArticleByUser(
+        @PathVariable userId: UUID,
+        @RequestParam(required = false) size: Int?,
+        @RequestParam(required = false) lastArticleId: Long?
+    ): ArticleSummaryPageDto {
+        return articleQueryUseCase.getArticleSummaryPageByCursorAndAuthor(userId, lastArticleId, size ?: 10)
+    }
+
+    @GetMapping("/{userId}")
+    fun getUserProfile(@PathVariable userId: UUID): UserProfileDto {
+        return userProfileComposition.getUserProfile(userId)
     }
 }
