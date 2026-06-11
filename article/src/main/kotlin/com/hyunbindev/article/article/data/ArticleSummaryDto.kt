@@ -17,15 +17,16 @@ data class ArticleSummaryDto(
     val title:String,
     val description:String,
     val createdAt: LocalDateTime,
-    val commentCount:Long=0L,
+    val commentsCount:Int=0,
 ){
     companion object{
-        fun from(projection: ArticleSummary):ArticleSummaryDto{
+        fun from(projection: ArticleSummary, commentCount:Int?):ArticleSummaryDto{
             return ArticleSummaryDto(
                 requireNotNull(projection.id) { "article entity is not persistent" },
                 title = projection.title,
                 description = projection.text,
                 createdAt = projection.createdAt,
+                commentsCount = commentCount?:0
             )
         }
     }

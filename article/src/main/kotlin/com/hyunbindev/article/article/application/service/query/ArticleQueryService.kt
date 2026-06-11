@@ -7,6 +7,8 @@ import com.hyunbindev.article.article.adapter.outbound.ArticleSummary
 import com.hyunbindev.article.article.data.ArticleSummaryDto
 import com.hyunbindev.article.article.data.ArticleSummaryPageDto
 import com.hyunbindev.article.article.port.inbound.ArticleStatsQueryUseCase
+import com.hyunbindev.article.comment.adapter.out.CommentRepository
+import com.hyunbindev.article.comment.port.inbound.ArticleCommentQueryUseCase
 import com.hyunbindev.article.global.exception.ArticleException
 import com.hyunbindev.article.global.exception.constant.ArticleExceptionCode
 import org.springframework.stereotype.Service
@@ -16,6 +18,7 @@ import java.util.UUID
 @Service
 internal class ArticleQueryService(
     private val articleRepository: ArticleRepository,
+    private val commentQueryUseCase: ArticleCommentQueryUseCase,
 ): ArticleQueryUseCase, ArticleStatsQueryUseCase {
 
     @Transactional(readOnly = true)
@@ -32,9 +35,13 @@ internal class ArticleQueryService(
         val articleSummary:List<ArticleSummary> = articleRepository
             .findByArticleSummaryByUserIdByCursor(authorId = authorId, cursorId = cursorArticleId , size = size+1 , textLength = 100)
 
+        val commentsCountMap:Map<Long,Int> = commentQueryUseCase
+            .getCommentCountByArticleIds(articleSummary.map { it.id })
+
         val hasNextPage = articleSummary.size > size
 
-        val articleSummaryDtoList = articleSummary.take(size).map { ArticleSummaryDto.from(it) }
+        val articleSummaryDtoList = articleSummary.take(size)
+            .map { ArticleSummaryDto.from(it,commentsCountMap[it.id]) }
 
         return ArticleSummaryPageDto(
             articles = articleSummaryDtoList,

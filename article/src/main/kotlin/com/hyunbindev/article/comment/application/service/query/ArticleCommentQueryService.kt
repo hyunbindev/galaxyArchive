@@ -1,16 +1,19 @@
 package com.hyunbindev.article.comment.application.service.query
 
+import com.hyunbindev.article.comment.adapter.out.CommentCountProjection
 import com.hyunbindev.article.comment.adapter.out.CommentRepository
 import com.hyunbindev.article.comment.data.ArticleCommentDto
 import com.hyunbindev.article.comment.domain.CommentEntity
 import com.hyunbindev.article.comment.port.inbound.ArticleCommentQueryUseCase
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
 internal class ArticleCommentQueryService(
     private val commentRepository: CommentRepository
 ): ArticleCommentQueryUseCase {
+    @Transactional(readOnly = true)
     override fun getCommentsByArticleId(articleId:Long):List<ArticleCommentDto>{
         val commentEntities = commentRepository.findCommentListByArticleId(articleId)
 
@@ -24,7 +27,12 @@ internal class ArticleCommentQueryService(
                 isDeleted = it.isDeleted
             )
         }
-
         return comments
+    }
+
+    @Transactional(readOnly = true)
+    override fun getCommentCountByArticleIds(articleId:List<Long>):Map<Long,Int>{
+        val commentCounts:List<CommentCountProjection> = commentRepository.countCommentsByArticleIds(articleId);
+        return commentCounts.associate { it.getArticleId() to it.getCommentCount() }
     }
 }

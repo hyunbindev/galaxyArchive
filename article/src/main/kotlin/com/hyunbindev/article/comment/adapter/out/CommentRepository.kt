@@ -17,4 +17,17 @@ interface CommentRepository : JpaRepository<CommentEntity, Long> {
         ORDER BY c.created DESC
         """)
     fun findCommentListByArticleId(articleId:Long): List<CommentEntity>
+
+    @Query("""
+        SELECT c.articleId AS articleId , count(c) AS commentCount FROM CommentEntity c
+        WHERE c.articleId in :articleIds
+        AND c.isDeleted = false
+        GROUP BY c.articleId
+    """)
+    fun countCommentsByArticleIds(articleIds:List<Long>): List<CommentCountProjection>
+}
+
+interface CommentCountProjection {
+    fun getArticleId(): Long
+    fun getCommentCount(): Int
 }
