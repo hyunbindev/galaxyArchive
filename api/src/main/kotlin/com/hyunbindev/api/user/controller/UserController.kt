@@ -1,7 +1,8 @@
 package com.hyunbindev.api.user.controller
 
 import com.hyunbindev.api.user.composition.UserProfileComposition
-import com.hyunbindev.api.user.data.UserProfileDto
+import com.hyunbindev.api.user.data.UserProfileCompositionResponse
+
 import com.hyunbindev.article.article.data.ArticleSummaryPageDto
 import com.hyunbindev.article.article.port.inbound.ArticleQueryUseCase
 import com.hyunbindev.common.auth.LoginUserId
@@ -41,8 +42,4 @@ class UserController(
         return articleQueryUseCase.getArticleSummaryPageByCursorAndAuthor(userId, lastArticleId, size ?: 10)
     }
 
-    @GetMapping("/{userId}")
-    fun getUserProfile(@PathVariable userId: UUID): UserProfileDto {
-        return userProfileComposition.getUserProfile(userId)
-    }
 }

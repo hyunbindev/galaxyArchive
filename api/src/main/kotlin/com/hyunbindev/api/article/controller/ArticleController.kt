@@ -1,13 +1,11 @@
 package com.hyunbindev.api.article.controller
 
 import com.hyunbindev.api.article.composition.ArticleQueryComposition
-import com.hyunbindev.api.article.data.ArticleCompositionDto
+import com.hyunbindev.api.article.data.ArticleCompositionResponse
 import com.hyunbindev.article.embedding.port.`in`.ArticleGraphUseCase
 import com.hyunbindev.article.article.port.inbound.CreateArticleUseCase
 import com.hyunbindev.article.article.port.inbound.DeleteArticleUseCase
 import com.hyunbindev.article.article.data.ArticleDto
-import com.hyunbindev.article.article.data.ArticleSummaryPageDto
-import com.hyunbindev.article.article.port.inbound.ArticleQueryUseCase
 import com.hyunbindev.article.embedding.data.ArticleGraphDto
 import com.hyunbindev.common.auth.LoginUserId
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -27,7 +25,6 @@ class ArticleController(
     private val articleGraphUseCase: ArticleGraphUseCase,
     private val articleQueryComposition: ArticleQueryComposition,
     private val articleDeleteUseCase: DeleteArticleUseCase,
-    private val articleQueryUseCase: ArticleQueryUseCase,
 ) {
     @PostMapping
     fun createArticle(@LoginUserId userId: UUID, @RequestBody req: ArticleDto.CreateRequest):Long{
@@ -40,7 +37,7 @@ class ArticleController(
     }
 
     @GetMapping("/{articleId}")
-    fun getArticle(@PathVariable articleId: Long): ArticleCompositionDto {
+    fun getArticle(@PathVariable articleId: Long): ArticleCompositionResponse {
         return articleQueryComposition.getArticle(articleId)
     }
 
@@ -48,6 +45,4 @@ class ArticleController(
     fun deleteArticle(@LoginUserId userId:UUID, @PathVariable articleId: Long, @RequestParam articleTitle:String) {
         articleDeleteUseCase.deleteArticle(userId, articleId, articleTitle)
     }
-
-
 }

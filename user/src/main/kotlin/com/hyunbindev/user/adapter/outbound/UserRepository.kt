@@ -14,9 +14,12 @@ interface UserRepository : JpaRepository<UserEntity, UUID> {
     fun findByOAuth2ProviderAndProviderId(oAuth2Provider: OAuth2Provider, providerId: String): UserEntity?
 
 
-    @Query("SELECT u FROM UserEntity u WHERE u.id = :id")
+    @Query("""
+            SELECT u FROM UserEntity u 
+            WHERE u.userId = :id
+            """)
     fun findUserById(@Param("id")uuid: UUID): UserEntity?
 
-    @Query("SELECT u FROM UserEntity u WHERE u.id in :ids")
+    @Query("SELECT u FROM UserEntity u WHERE u.userId in :ids")
     fun findUserByIds(@Param("ids")ids:List<UUID>): List<UserEntity>
 }

@@ -24,6 +24,7 @@ class OAuth2SuccessService(
         val targetUrl = state?.takeIf { it.contains(delimiter) }
             ?.split(delimiter)
             ?.getOrNull(1) ?: "/"
+            .takeIf { !it.startsWith("/login") } ?:"/"
 
         // TODO: 오픈 리다이렉트(Open Redirect) 방지를 위한 화이트리스트 호스트 검증 로직 추가 필요
 

@@ -1,9 +1,12 @@
 package com.hyunbindev.api.user.data
 
-import com.hyunbindev.user.data.UserInfoDto
+import java.util.UUID
 
-data class UserProfileDto(
-    val userInfo: UserInfoDto,
+data class UserProfileCompositionResponse(
+    val userId: UUID,
+    val nickName:String,
+    val userProfileImageUrl:String?=null,
+    val email:String?=null,
     val bio: String,
     val articleCount: Int,
     //TODO-게시글 클러스터 개수 연산 구현 필요

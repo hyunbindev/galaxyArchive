@@ -23,7 +23,7 @@ class UserProfileEntity(
     @JoinColumn(name = "user_id")
     val user: UserEntity
 ) : Persistable<UUID> {
-
+    var nickName: String? = null
     var bio: String = ""
 
     @Transient
