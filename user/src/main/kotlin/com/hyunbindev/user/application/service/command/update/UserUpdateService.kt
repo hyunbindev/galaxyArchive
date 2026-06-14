@@ -7,11 +7,11 @@ import com.hyunbindev.user.domain.UserEntity
 import com.hyunbindev.user.global.exception.UserException
 import com.hyunbindev.user.global.exception.constant.UserExceptionCode
 import com.hyunbindev.user.adapter.outbound.UserRepository
-import com.hyunbindev.user.data.UserProfileDto
 import com.hyunbindev.user.domain.UserProfileEntity
 import com.hyunbindev.user.port.inbound.UserProfileUpdateUseCase
-import jakarta.transaction.Transactional
+
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -36,6 +36,7 @@ class UserUpdateService(
 
         return UserInfoDto.from(user)
     }
+
 
     @Transactional
     override fun updateUserProfile(userId:UUID, bio:String?, nickName:String?) {

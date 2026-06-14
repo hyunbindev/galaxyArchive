@@ -14,3 +14,9 @@ data class UserProfileCompositionResponse(
     //TODO-엔지 갯수 연산 구현 필요
     val connectionCount: Int = 0,
 )
+
+data class UserProfileEditResponse(
+    val defaultNickName:String?,
+    val nickName:String?,
+    val bio:String?,
+)
