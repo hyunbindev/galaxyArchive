@@ -2,6 +2,7 @@ package com.hyunbindev.user.data
 
 import com.hyunbindev.common.constant.oauth2.OAuth2Provider
 import com.hyunbindev.user.domain.UserEntity
+import com.hyunbindev.user.domain.UserProfileEntity
 import org.springframework.boot.autoconfigure.security.SecurityProperties
 import java.util.UUID
 
@@ -14,14 +15,28 @@ data class UserInfoDto(
     var profileImageUrl: String? = null,
 ){
     companion object{
-        fun from(entity: UserEntity): UserInfoDto{
-            return UserInfoDto(
-                id = entity.id,
-                nickName = entity.nickName,
-                oAuth2Provider = entity.oAuth2Provider,
-                email = entity.email,
-                profileImageUrl = entity.profileImageUrl,
-            )
+        fun from(userProfile: UserProfileEntity): UserInfoDto{
+            return with(userProfile){
+                UserInfoDto(
+                    id = user.id,
+                    nickName = nickName?:userProfile.user.nickName,
+                    oAuth2Provider = user.oAuth2Provider,
+                    email = user.email,
+                    profileImageUrl = user.profileImageUrl,
+                )
+            }
+        }
+
+        fun from(user:UserEntity): UserInfoDto{
+            return with(user){
+                UserInfoDto(
+                    id = id,
+                    nickName = nickName,
+                    oAuth2Provider = oAuth2Provider,
+                    email = email,
+                    profileImageUrl = profileImageUrl,
+                )
+            }
         }
 
         fun fallback():UserInfoDto{

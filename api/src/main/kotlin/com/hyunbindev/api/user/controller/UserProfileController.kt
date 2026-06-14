@@ -24,7 +24,7 @@ class UserProfileController(
     private val userProfileQueryUseCase: UserProfileQueryUseCase
 ) {
     @GetMapping("/{userId}")
-    fun getUserProfile(@PathVariable userId: UUID): UserProfileCompositionResponse {
+    fun getUserProfilePage(@PathVariable userId: UUID): UserProfileCompositionResponse {
         return userProfileComposition.getUserProfile(userId)
     }
 

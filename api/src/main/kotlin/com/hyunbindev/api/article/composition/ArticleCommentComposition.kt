@@ -3,6 +3,8 @@ package com.hyunbindev.api.article.composition
 import com.hyunbindev.api.article.data.ArticleCommentCompositionDto
 import com.hyunbindev.article.comment.port.inbound.ArticleCommentQueryUseCase
 import com.hyunbindev.user.data.UserInfoDto
+import com.hyunbindev.user.data.UserProfileDto
+import com.hyunbindev.user.port.inbound.UserProfileQueryUseCase
 import com.hyunbindev.user.port.inbound.UserQueryUseCase
 import org.springframework.stereotype.Service
 
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Service
 @Service
 class ArticleCommentComposition(
     private val userQueryUseCase: UserQueryUseCase,
+    private val userProfileQueryUseCase: UserProfileQueryUseCase,
     private val articleCommentQueryUseCase: ArticleCommentQueryUseCase,
 ) {
     //TODO-삭제 및 답글 필터링 도메인 로직은 article module 안으로 이관
@@ -24,19 +27,19 @@ class ArticleCommentComposition(
             .map { it.authorId }
             .distinct()
 
+        val userProfileMap = userProfileQueryUseCase.getUserProfiles(userUuids)
         // request author info
-        val userMap = userQueryUseCase.getUsers(userUuids)
 
         // comment author info mapping
-        val commentCompositionMap = comments.associate { dto ->
+        val commentCompositionMap = comments.associate { comment ->
 
-            val authorDto: UserInfoDto = if(dto.isDeleted) {
-                UserInfoDto.fallback()
+            val authorDto: UserProfileDto = if(comment.isDeleted) {
+                UserProfileDto.fallback()
             }else {
-                userMap[dto.authorId] ?: UserInfoDto.fallback()
+                userProfileMap [comment.authorId] ?: UserProfileDto.fallback()
             }
 
-            dto.id to ArticleCommentCompositionDto.of(authorDto, dto)
+            comment.id to ArticleCommentCompositionDto.of(authorDto, comment)
         }
 
         // recomment mapping

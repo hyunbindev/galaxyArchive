@@ -17,4 +17,14 @@ interface UserProfileRepository : JpaRepository<UserProfileEntity, UserEntity> {
         """
     )
     fun findByUserId(userId:UUID):UserProfileEntity?
+
+
+    @Query(
+        value="""
+            SELECT p FROM UserProfileEntity p
+            JOIN FETCH p.user
+            WHERE p.userId IN :userIds
+        """
+    )
+    fun findByUserIds(userIds:List<UUID>):List<UserProfileEntity>
 }

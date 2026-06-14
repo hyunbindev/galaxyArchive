@@ -21,7 +21,6 @@ import java.util.UUID
 class UserController(
     private val userQueryUseCase: UserQueryUseCase,
     private val articleQueryUseCase: ArticleQueryUseCase,
-    private val userProfileComposition: UserProfileComposition,
 ) {
     @GetMapping("/me")
     fun getUserSelf(@LoginUserId userId: UUID): UserInfoDto {

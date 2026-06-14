@@ -7,5 +7,8 @@ import java.util.UUID
 interface UserProfileQueryUseCase {
     fun getUserProfile(userId: UUID):UserProfileDto
 
-    fun getUserProfileEditInfo(userId:UUID): UserProfileEditInfoDto
+    fun getUserProfileEditInfo(userId:UUID):UserProfileEditInfoDto
+
+    fun getUserProfiles(userIds:List<UUID>):Map<UUID,UserProfileDto>
+
 }

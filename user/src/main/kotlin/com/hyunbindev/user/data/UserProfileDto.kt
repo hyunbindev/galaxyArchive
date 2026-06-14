@@ -5,11 +5,11 @@ import java.util.UUID
 
 
 data class UserProfileDto(
-    val userId:UUID,
+    val userId:UUID?=null,
     val nickName:String,
     val userProfileImageUrl:String?=null,
     val email:String?=null,
-    val bio: String,
+    val bio: String?=null,
 ) {
     companion object {
         fun from(userProfileEntity: UserProfileEntity ): UserProfileDto {
@@ -22,5 +22,6 @@ data class UserProfileDto(
                 )
             }
         }
+        fun fallback(): UserProfileDto = UserProfileDto(nickName = "Unknown")
     }
 }

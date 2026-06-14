@@ -3,7 +3,7 @@ package com.hyunbindev.api.user.data
 import java.util.UUID
 
 data class UserProfileCompositionResponse(
-    val userId: UUID,
+    val userId: UUID? = null,
     val nickName:String,
     val userProfileImageUrl:String?=null,
     val email:String?=null,

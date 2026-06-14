@@ -39,7 +39,7 @@ data class AuthorDto(
                 id=userProfileDto.userId,
                 nickName=userProfileDto.nickName,
                 profileImageUrl = userProfileDto.userProfileImageUrl,
-                bio = userProfileDto.bio
+                bio = userProfileDto.bio?:""
             )
         }
     }

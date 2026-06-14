@@ -20,7 +20,7 @@ class UserProfileComposition(
             nickName = userProfile.nickName,
             userProfileImageUrl = userProfile.userProfileImageUrl,
             email = userProfile.email,
-            bio = userProfile.bio,
+            bio = userProfile.bio?:"",
             articleCount = articleCount
         )
     }

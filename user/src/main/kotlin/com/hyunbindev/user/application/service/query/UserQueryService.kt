@@ -1,6 +1,7 @@
 package com.hyunbindev.user.application.service.query
 
 import com.hyunbindev.common.constant.oauth2.OAuth2Provider
+import com.hyunbindev.user.adapter.outbound.UserProfileRepository
 import com.hyunbindev.user.port.inbound.UserQueryUseCase
 import com.hyunbindev.user.data.UserInfoDto
 import com.hyunbindev.user.global.exception.UserException
@@ -13,7 +14,8 @@ import java.util.UUID
 @Service
 @Transactional(readOnly = true)
 internal class UserQueryService(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val userProfileRepository: UserProfileRepository
 ): UserQueryUseCase {
 
     override fun isUser(provider: OAuth2Provider, providerId: String): Boolean {
@@ -27,7 +29,7 @@ internal class UserQueryService(
     }
 
     override fun getUser(userUuid: UUID): UserInfoDto {
-        val user = userRepository.findUserById(userUuid)
+        val user = userProfileRepository.findByUserId(userUuid)
             ?: throw UserException(UserExceptionCode.USER_NOT_FOUND)
         return UserInfoDto.from(user)
     }
