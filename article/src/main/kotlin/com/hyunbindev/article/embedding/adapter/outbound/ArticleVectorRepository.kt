@@ -1,4 +1,4 @@
-package com.hyunbindev.article.embedding.adapter.out
+package com.hyunbindev.article.embedding.adapter.outbound
 
 import com.hyunbindev.article.embedding.domain.ArticleVectorEntity
 import org.springframework.data.jpa.repository.JpaRepository
@@ -23,7 +23,6 @@ interface ArticleVectorRepository : JpaRepository<ArticleVectorEntity, Long> {
                 ORDER BY w ASC;
                """, nativeQuery = true)
     fun findAllEdgesOrderByWeightASC(): List<ArticleEdgeProjection>
-
 }
 
 

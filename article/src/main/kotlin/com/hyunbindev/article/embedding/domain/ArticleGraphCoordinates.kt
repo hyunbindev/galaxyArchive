@@ -5,7 +5,7 @@ import com.hyunbindev.article.embedding.data.Cluster
 import com.hyunbindev.article.embedding.data.Edge
 import com.hyunbindev.article.embedding.data.Node
 import com.hyunbindev.article.embedding.data.Point3D
-import com.hyunbindev.article.embedding.adapter.out.ArticleEdgeProjection
+import com.hyunbindev.article.embedding.adapter.outbound.ArticleEdgeProjection
 import java.util.LinkedList
 import kotlin.math.PI
 import kotlin.math.acos

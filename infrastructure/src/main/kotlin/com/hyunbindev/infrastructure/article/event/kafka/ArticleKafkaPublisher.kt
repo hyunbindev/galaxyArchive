@@ -14,7 +14,7 @@ class ArticleKafkaPublisher(
     private val logger = LoggerFactory.getLogger(ArticleKafkaPublisher::class.java)
     override fun publishCreateEvent(event: ArticleCreateEvent) {
         try {
-            val response = kafkaTemplate.send("article-events",  event.articleId.toString(), event)
+            val response = kafkaTemplate.send("article-created",  event.articleId.toString(), event)
             response.get(3, TimeUnit.SECONDS)
         }catch (e: Exception){
             logger.error(e.message, e)

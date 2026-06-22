@@ -1,4 +1,4 @@
-package com.hyunbindev.article.embedding.port.`in`
+package com.hyunbindev.article.embedding.port.inbound
 
 import com.hyunbindev.article.embedding.data.ArticleGraphDto
 

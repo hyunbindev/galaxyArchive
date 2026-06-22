@@ -5,4 +5,5 @@ enum class ArticleStatus(val status:String) {
     PENDING("PENDING"),
     CALCULATING("CALCULATING"),
     COMPLETED("COMPLETED"),
+    FAILED("FAILED")
 }

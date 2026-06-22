@@ -10,6 +10,8 @@ data class ArticleCreateEvent(
     val authorId: UUID,
     val traceId:String = UUID.randomUUID().toString(),
     val imageUuids: List<UUID>,
+    val title:String,
+    val rawText: String,
     @field:JsonFormat(
         shape = JsonFormat.Shape.STRING,
         pattern = "yyyy-MM-dd'T'HH:mm:ss",
@@ -19,12 +21,13 @@ data class ArticleCreateEvent(
 ){
     companion object{
         fun from(article: ArticleEntity, imageUuids:List<UUID>): ArticleCreateEvent{
-            val id = article.id ?: throw IllegalArgumentException("article id is null")
-
+            val id = article.id ?: throw IllegalArgumentException("Article Id is null : {${article.id}}")
             return ArticleCreateEvent(
                 articleId = id,
                 authorId = article.authorId,
-                imageUuids = imageUuids
+                imageUuids = imageUuids,
+                title = article.title,
+                rawText = article.rawText,
             )
         }
     }

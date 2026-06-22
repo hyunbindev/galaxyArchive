@@ -13,6 +13,9 @@ interface ArticleRepository : JpaRepository<ArticleEntity, Long> {
     @Query("SELECT a FROM ArticleEntity a WHERE a.id=:id AND a.isDeleted = false")
     fun findArticleById(id: Long): ArticleEntity?
 
+    @Query("SELECT a FROM ArticleEntity a WHERE a.id=:id AND a.isDeleted = true")
+    fun findArticleByIdWithDeleted(id: Long): ArticleEntity?
+
     @Query(
         value = """
         SELECT

@@ -1,9 +1,9 @@
-package com.hyunbindev.article.embedding.adapter.`in`
+package com.hyunbindev.article.embedding.adapter.inbound
 
-import com.hyunbindev.article.embedding.port.`in`.ArticleGraphUseCase
+import com.hyunbindev.article.embedding.port.inbound.ArticleGraphUseCase
 import com.hyunbindev.article.embedding.data.ArticleGraphDto
 import com.hyunbindev.article.embedding.domain.getArticleGraph
-import com.hyunbindev.article.embedding.adapter.out.ArticleVectorRepository
+import com.hyunbindev.article.embedding.adapter.outbound.ArticleVectorRepository
 import org.springframework.stereotype.Service
 
 @Service
