@@ -57,15 +57,6 @@ services:
     networks:
       - galaxy-network
 
-  #AI Embedding Engine
-  ollama:
-    image: ollama/ollama:latest
-    container_name: galaxy-ollama
-    ports:
-      - "11434:11434"
-    volumes:
-      - ./volumes/ollama_data:/root/.ollama
-
   #minio Object Storage
   minio:
     image: quay.io/minio/minio:latest
