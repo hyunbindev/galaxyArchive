@@ -2,6 +2,7 @@ package com.hyunbindev.article.article.data
 
 import com.hyunbindev.article.article.adapter.outbound.ArticleSummary
 import com.hyunbindev.article.article.domain.ArticleEntity
+import com.hyunbindev.article.embedding.domain.ArticleKeyWordEntity
 import java.time.LocalDateTime
 
 data class ArticleSummaryPageDto(
@@ -26,7 +27,7 @@ data class ArticleSummaryDto(
                 title = projection.title,
                 description = projection.text,
                 createdAt = projection.createdAt,
-                commentsCount = commentCount?:0
+                commentsCount = commentCount?:0,
             )
         }
     }

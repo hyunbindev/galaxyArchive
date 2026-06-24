@@ -12,6 +12,7 @@ data class ArticleCompositionResponse(
     val title:String,
     val text:String,
     val author:AuthorDto,
+    val keywords:List<String>,
     val createdAt: LocalDateTime,
 ){
     companion object{
@@ -22,6 +23,7 @@ data class ArticleCompositionResponse(
                 text = articleDto.text,
                 author = AuthorDto.from(userProfileDto),
                 createdAt = articleDto.createdAt,
+                keywords = articleDto.keywords,
             )
         }
     }

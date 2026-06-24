@@ -5,6 +5,7 @@ import com.hyunbindev.article.article.port.inbound.ArticleQueryUseCase
 import com.hyunbindev.article.article.data.ArticleDto
 import com.hyunbindev.user.data.UserProfileDto
 import com.hyunbindev.user.port.inbound.UserProfileQueryUseCase
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service

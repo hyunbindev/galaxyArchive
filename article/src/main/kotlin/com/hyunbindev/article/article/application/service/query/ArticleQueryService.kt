@@ -9,6 +9,7 @@ import com.hyunbindev.article.article.data.ArticleSummaryPageDto
 import com.hyunbindev.article.article.port.inbound.ArticleStatsQueryUseCase
 import com.hyunbindev.article.comment.adapter.out.CommentRepository
 import com.hyunbindev.article.comment.port.inbound.ArticleCommentQueryUseCase
+import com.hyunbindev.article.article.adapter.outbound.ArticleKeywordRepository
 import com.hyunbindev.article.global.exception.ArticleException
 import com.hyunbindev.article.global.exception.constant.ArticleExceptionCode
 import org.springframework.stereotype.Service
@@ -19,6 +20,7 @@ import java.util.UUID
 internal class ArticleQueryService(
     private val articleRepository: ArticleRepository,
     private val commentQueryUseCase: ArticleCommentQueryUseCase,
+    private val articleKeywordRepository: ArticleKeywordRepository,
 ): ArticleQueryUseCase, ArticleStatsQueryUseCase {
 
     @Transactional(readOnly = true)
@@ -26,7 +28,9 @@ internal class ArticleQueryService(
         val article = articleRepository.findArticleById(id)?:
             throw ArticleException(ArticleExceptionCode.ARTICLE_NOT_FOUND)
 
-        return ArticleDto.Response.from(article)
+        val keywords = articleKeywordRepository.findAllByArticleOrderBySimilarityDesc(article)
+
+        return ArticleDto.Response.from(article,keywords)
     }
 
 

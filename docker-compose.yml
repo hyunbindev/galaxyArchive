@@ -41,6 +41,8 @@ services:
 
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
       KAFKA_OFFLINE_IMAGE_MODE: 'true'
+
+
     networks:
       - galaxy-network
   Kafka-ui:

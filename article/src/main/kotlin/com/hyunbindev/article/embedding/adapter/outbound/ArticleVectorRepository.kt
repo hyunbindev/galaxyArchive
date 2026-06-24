@@ -1,6 +1,6 @@
 package com.hyunbindev.article.embedding.adapter.outbound
 
-import com.hyunbindev.article.embedding.domain.ArticleVectorEntity
+import com.hyunbindev.article.article.domain.ArticleVectorEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
