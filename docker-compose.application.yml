@@ -1,3 +1,4 @@
+name: "galaxyarchive"
 services:
   galaxy-archive-api:
     container_name: galaxy-archive-api

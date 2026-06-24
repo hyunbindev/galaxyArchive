@@ -1,3 +1,4 @@
+name: "galaxyarchive"
 services:
   #postgreSQL Database
   data-base:
@@ -74,4 +75,5 @@ services:
 
 networks:
   galaxy-network:
+    name: galaxy-network
     driver: bridge
