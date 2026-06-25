@@ -1,5 +1,6 @@
-package com.hyunbindev.article.article.domain
+package com.hyunbindev.article.embedding.domain
 
+import com.hyunbindev.article.article.domain.ArticleEntity
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType

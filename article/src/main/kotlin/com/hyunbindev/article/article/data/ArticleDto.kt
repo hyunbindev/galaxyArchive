@@ -1,7 +1,7 @@
 package com.hyunbindev.article.article.data
 
 import com.hyunbindev.article.article.domain.ArticleEntity
-import com.hyunbindev.article.embedding.domain.ArticleKeyWordEntity
+import com.hyunbindev.article.article.domain.ArticleKeyWordEntity
 import java.time.LocalDateTime
 import java.util.UUID
 

@@ -44,8 +44,14 @@ internal class ArticleQueryService(
 
         val hasNextPage = articleSummary.size > size
 
+        val articleIds = articleSummary.map { it.id }
+
+        val keywordEntities = articleKeywordRepository.findAllByArticleIdInOrderBySimilarityDesc(articleIds)
+
+        val keywordMap: Map<Long, List<String>> = keywordEntities.groupBy(keySelector = { it.article.id!! },valueTransform = { it.keyword })
+
         val articleSummaryDtoList = articleSummary.take(size)
-            .map { ArticleSummaryDto.from(it,commentsCountMap[it.id]) }
+            .map { ArticleSummaryDto.from(it,commentsCountMap[it.id],keywordMap[it.id]?:emptyList()) }
 
         return ArticleSummaryPageDto(
             articles = articleSummaryDtoList,
