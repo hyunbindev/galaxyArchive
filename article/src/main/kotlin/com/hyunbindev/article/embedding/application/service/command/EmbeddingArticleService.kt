@@ -13,37 +13,18 @@ import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 @Service
-internal class EmbeddingArticleService(
-    private val articleVectorRepository: ArticleVectorRepository,
+internal class AfterEmbeddingArticleService(
     private val articleRepository: ArticleRepository,
-    private val articleKeywordRepository: ArticleKeywordRepository
 ): EmbeddingArticleUseCase {
 
     @Transactional
-    override fun embeddingArticle(message: EmbeddingCompletedEvent) {
+    override fun afterEmbeddingArticleHandler(message: EmbeddingCompletedEvent) {
         //게시글이 없을 경우 로직 종료
         val article:ArticleEntity = articleRepository.findArticleById(message.articleId)?:return;
 
-        val articleVector: ArticleVectorEntity = ArticleVectorEntity(
-            article = article,
-            vector = message.denseVectors
-        )
-
-        articleVectorRepository.save(articleVector)
-
-
-        val keywordEntities:List<ArticleKeyWordEntity> = message.keywords
-            .map { ArticleKeyWordEntity(article, it.keyword,it.score) }
-
-        articleKeywordRepository.saveAll(keywordEntities)
-
-
-        article.status = ArticleStatus.COMPLETED
-    }
-
-    @Transactional
-    override fun failEmbeddingArticle(articleId: Long) {
-        val article:ArticleEntity = articleRepository.findArticleById(articleId)?:return
-        article.status=ArticleStatus.FAILED
+        when(message.status){
+            "COMPLETED"->{article.status = ArticleStatus.COMPLETED}
+            "FAILED"->{article.status = ArticleStatus.FAILED}
+        }
     }
 }

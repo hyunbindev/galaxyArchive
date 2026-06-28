@@ -15,8 +15,9 @@ class ArticleEmbeddingCompletedKafkaListener(
 )
 {
     private val logger = LoggerFactory.getLogger(javaClass)
+
     @KafkaListener(
-        topics = ["embedding-created"],
+        topics = ["embedding-complete"],
         groupId = "article-service",
         containerFactory = "stringKafkaListenerFactory"
     )
@@ -25,15 +26,6 @@ class ArticleEmbeddingCompletedKafkaListener(
             eventString,
             EmbeddingCompletedEvent::class.java
         )
-        embeddingArticleUseCase.embeddingArticle(event)
-    }
-
-    @KafkaListener(
-        topics = ["embedding-created-dlq"],
-        groupId = "article-service",
-        containerFactory = "stringKafkaListenerFactory"
-    )
-    fun onArticleEmbeddedFailed(event: EmbeddingFailEvent){
-        embeddingArticleUseCase.failEmbeddingArticle(event.articleId)
+        embeddingArticleUseCase.afterEmbeddingArticleHandler(event)
     }
 }
