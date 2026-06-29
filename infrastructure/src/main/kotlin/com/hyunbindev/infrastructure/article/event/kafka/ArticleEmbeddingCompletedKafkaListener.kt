@@ -26,6 +26,7 @@ class ArticleEmbeddingCompletedKafkaListener(
             eventString,
             EmbeddingCompletedEvent::class.java
         )
+        logger.info(event.toString())
         embeddingArticleUseCase.afterEmbeddingArticleHandler(event)
     }
 }
