@@ -5,9 +5,8 @@ import com.hyunbindev.api.user.data.UserProfileCompositionResponse
 import com.hyunbindev.api.user.data.UserProfileEditResponse
 import com.hyunbindev.api.user.data.UserProfileUpdateRequest
 import com.hyunbindev.common.auth.LoginUserId
-import com.hyunbindev.user.data.UserProfileEditInfoDto
-import com.hyunbindev.user.port.inbound.UserProfileQueryUseCase
-import com.hyunbindev.user.port.inbound.UserProfileUpdateUseCase
+import com.hyunbindev.user.port.usecase.inbound.UserProfileQueryUseCase
+import com.hyunbindev.user.port.usecase.inbound.UserProfileUpdateUseCase
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PathVariable

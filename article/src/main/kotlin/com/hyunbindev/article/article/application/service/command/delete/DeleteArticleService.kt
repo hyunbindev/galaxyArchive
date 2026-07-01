@@ -1,6 +1,6 @@
 package com.hyunbindev.article.article.application.service.command.delete
 
-import com.hyunbindev.article.article.port.inbound.DeleteArticleUseCase
+import com.hyunbindev.article.article.port.usecase.inbound.DeleteArticleUseCase
 import com.hyunbindev.article.article.domain.ArticleEntity
 import com.hyunbindev.article.article.adapter.outbound.ArticleRepository
 import com.hyunbindev.article.global.exception.ArticleException

@@ -1,4 +1,4 @@
-package com.hyunbindev.user.port.inbound
+package com.hyunbindev.user.port.usecase.inbound
 
 import com.hyunbindev.common.constant.oauth2.OAuth2Provider
 import com.hyunbindev.user.data.UserInfoDto

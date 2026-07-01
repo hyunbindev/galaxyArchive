@@ -25,6 +25,7 @@ repositories {
 dependencies {
     implementation project(':common')
     implementation project(':article')
+    implementation project(':user')
 
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.jetbrains.kotlin:kotlin-reflect'

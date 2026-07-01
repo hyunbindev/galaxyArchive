@@ -1,4 +1,4 @@
-package com.hyunbindev.article.article.port.inbound
+package com.hyunbindev.article.article.port.usecase.inbound
 
 import com.hyunbindev.article.article.data.ArticleDto
 import com.hyunbindev.article.article.data.ArticleSummaryPageDto

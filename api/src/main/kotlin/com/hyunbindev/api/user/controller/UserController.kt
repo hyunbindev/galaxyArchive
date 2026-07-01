@@ -1,12 +1,9 @@
 package com.hyunbindev.api.user.controller
 
-import com.hyunbindev.api.user.composition.UserProfileComposition
-import com.hyunbindev.api.user.data.UserProfileCompositionResponse
-
 import com.hyunbindev.article.article.data.ArticleSummaryPageDto
-import com.hyunbindev.article.article.port.inbound.ArticleQueryUseCase
+import com.hyunbindev.article.article.port.usecase.inbound.ArticleQueryUseCase
 import com.hyunbindev.common.auth.LoginUserId
-import com.hyunbindev.user.port.inbound.UserQueryUseCase
+import com.hyunbindev.user.port.usecase.inbound.UserQueryUseCase
 import com.hyunbindev.user.data.UserInfoDto
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping

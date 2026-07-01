@@ -1,7 +1,7 @@
 package com.hyunbindev.infrastructure.article.event.kafka
 
 import com.hyunbindev.article.article.data.ArticleCreateEvent
-import com.hyunbindev.article.article.port.outbound.ArticleEventPublishPort
+import com.hyunbindev.article.article.port.event.outbound.ArticleEventPublishPort
 import org.slf4j.LoggerFactory
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Component

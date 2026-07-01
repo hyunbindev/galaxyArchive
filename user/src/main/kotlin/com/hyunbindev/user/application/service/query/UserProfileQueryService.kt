@@ -6,7 +6,7 @@ import com.hyunbindev.user.data.UserProfileEditInfoDto
 import com.hyunbindev.user.domain.UserProfileEntity
 import com.hyunbindev.user.global.exception.UserException
 import com.hyunbindev.user.global.exception.constant.UserExceptionCode
-import com.hyunbindev.user.port.inbound.UserProfileQueryUseCase
+import com.hyunbindev.user.port.usecase.inbound.UserProfileQueryUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID

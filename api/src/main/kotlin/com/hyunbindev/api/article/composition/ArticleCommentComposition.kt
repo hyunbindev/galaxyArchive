@@ -2,10 +2,9 @@ package com.hyunbindev.api.article.composition
 
 import com.hyunbindev.api.article.data.ArticleCommentCompositionDto
 import com.hyunbindev.article.comment.port.inbound.ArticleCommentQueryUseCase
-import com.hyunbindev.user.data.UserInfoDto
 import com.hyunbindev.user.data.UserProfileDto
-import com.hyunbindev.user.port.inbound.UserProfileQueryUseCase
-import com.hyunbindev.user.port.inbound.UserQueryUseCase
+import com.hyunbindev.user.port.usecase.inbound.UserProfileQueryUseCase
+import com.hyunbindev.user.port.usecase.inbound.UserQueryUseCase
 import org.springframework.stereotype.Service
 
 

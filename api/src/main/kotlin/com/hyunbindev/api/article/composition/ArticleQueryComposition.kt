@@ -1,11 +1,10 @@
 package com.hyunbindev.api.article.composition
 
 import com.hyunbindev.api.article.data.ArticleCompositionResponse
-import com.hyunbindev.article.article.port.inbound.ArticleQueryUseCase
+import com.hyunbindev.article.article.port.usecase.inbound.ArticleQueryUseCase
 import com.hyunbindev.article.article.data.ArticleDto
 import com.hyunbindev.user.data.UserProfileDto
-import com.hyunbindev.user.port.inbound.UserProfileQueryUseCase
-import org.slf4j.LoggerFactory
+import com.hyunbindev.user.port.usecase.inbound.UserProfileQueryUseCase
 import org.springframework.stereotype.Service
 
 @Service

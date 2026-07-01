@@ -1,14 +1,14 @@
 package com.hyunbindev.user.application.service.command.update
 
 import com.hyunbindev.user.adapter.outbound.UserProfileRepository
-import com.hyunbindev.user.port.inbound.UserUpdateUseCase
+import com.hyunbindev.user.port.usecase.inbound.UserUpdateUseCase
 import com.hyunbindev.user.data.UserInfoDto
 import com.hyunbindev.user.domain.UserEntity
 import com.hyunbindev.user.global.exception.UserException
 import com.hyunbindev.user.global.exception.constant.UserExceptionCode
 import com.hyunbindev.user.adapter.outbound.UserRepository
 import com.hyunbindev.user.domain.UserProfileEntity
-import com.hyunbindev.user.port.inbound.UserProfileUpdateUseCase
+import com.hyunbindev.user.port.usecase.inbound.UserProfileUpdateUseCase
 
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional

@@ -2,15 +2,15 @@ package com.hyunbindev.infrastructure.article.event.kafka
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.hyunbindev.article.embedding.data.EmbeddingCompletedEvent
-import com.hyunbindev.article.embedding.data.EmbeddingFailEvent
-import com.hyunbindev.article.embedding.port.inbound.EmbeddingArticleUseCase
+
+import com.hyunbindev.article.embedding.port.event.inbound.ArticleEmbeddingCompleteEventHandler
 import org.slf4j.LoggerFactory
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
 
 @Component
 class ArticleEmbeddingCompletedKafkaListener(
-    private val embeddingArticleUseCase:EmbeddingArticleUseCase,
+    private val articleEmbeddingCompleteEventHandler: ArticleEmbeddingCompleteEventHandler,
     private val objectMapper: ObjectMapper,
 )
 {
@@ -21,12 +21,11 @@ class ArticleEmbeddingCompletedKafkaListener(
         groupId = "article-service",
         containerFactory = "stringKafkaListenerFactory"
     )
-    fun onArticleEmbedded(eventString:String){
+    fun onArticleEmbeddingComplete(eventString:String){
         val event = objectMapper.readValue(
             eventString,
             EmbeddingCompletedEvent::class.java
         )
-        logger.info(event.toString())
-        embeddingArticleUseCase.afterEmbeddingArticleHandler(event)
+        articleEmbeddingCompleteEventHandler.handle(event)
     }
 }

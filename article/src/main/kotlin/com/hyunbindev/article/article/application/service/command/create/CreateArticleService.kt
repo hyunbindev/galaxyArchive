@@ -1,11 +1,11 @@
 package com.hyunbindev.article.article.application.service.command.create
 
-import com.hyunbindev.article.article.port.inbound.CreateArticleUseCase
+import com.hyunbindev.article.article.port.usecase.inbound.CreateArticleUseCase
 import com.hyunbindev.article.article.data.ArticleDto
 import com.hyunbindev.article.article.domain.ArticleEntity
 import com.hyunbindev.article.article.data.ArticleCreateEvent
 import com.hyunbindev.article.article.adapter.outbound.ArticleRepository
-import com.hyunbindev.article.article.port.outbound.ArticleEventPublishPort
+import com.hyunbindev.article.article.port.event.outbound.ArticleEventPublishPort
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.util.UUID

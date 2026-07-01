@@ -1,12 +1,12 @@
 package com.hyunbindev.article.article.application.service.query
 
-import com.hyunbindev.article.article.port.inbound.ArticleQueryUseCase
+import com.hyunbindev.article.article.port.usecase.inbound.ArticleQueryUseCase
 import com.hyunbindev.article.article.data.ArticleDto
 import com.hyunbindev.article.article.adapter.outbound.ArticleRepository
 import com.hyunbindev.article.article.adapter.outbound.ArticleSummary
 import com.hyunbindev.article.article.data.ArticleSummaryDto
 import com.hyunbindev.article.article.data.ArticleSummaryPageDto
-import com.hyunbindev.article.article.port.inbound.ArticleStatsQueryUseCase
+import com.hyunbindev.article.article.port.usecase.inbound.ArticleStatsQueryUseCase
 import com.hyunbindev.article.comment.adapter.out.CommentRepository
 import com.hyunbindev.article.comment.port.inbound.ArticleCommentQueryUseCase
 import com.hyunbindev.article.article.adapter.outbound.ArticleKeywordRepository

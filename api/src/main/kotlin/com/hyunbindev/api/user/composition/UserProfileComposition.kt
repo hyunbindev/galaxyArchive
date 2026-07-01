@@ -1,8 +1,8 @@
 package com.hyunbindev.api.user.composition
 
 import com.hyunbindev.api.user.data.UserProfileCompositionResponse
-import com.hyunbindev.article.article.port.inbound.ArticleStatsQueryUseCase
-import com.hyunbindev.user.port.inbound.UserProfileQueryUseCase
+import com.hyunbindev.article.article.port.usecase.inbound.ArticleStatsQueryUseCase
+import com.hyunbindev.user.port.usecase.inbound.UserProfileQueryUseCase
 import org.springframework.stereotype.Service
 import java.util.UUID
 

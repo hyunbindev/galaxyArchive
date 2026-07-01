@@ -1,4 +1,4 @@
-package com.hyunbindev.article.embedding.port.inbound
+package com.hyunbindev.article.embedding.port.usecase.inbound
 
 import com.hyunbindev.article.embedding.data.ArticleGraphDto
 
