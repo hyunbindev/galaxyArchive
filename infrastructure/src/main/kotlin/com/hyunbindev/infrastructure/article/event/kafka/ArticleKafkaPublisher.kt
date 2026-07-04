@@ -18,6 +18,7 @@ class ArticleKafkaPublisher(
             response.get(3, TimeUnit.SECONDS)
         }catch (e: Exception){
             logger.error(e.message, e)
+            //TODO-재시도 로직
             throw e;
         }
     }

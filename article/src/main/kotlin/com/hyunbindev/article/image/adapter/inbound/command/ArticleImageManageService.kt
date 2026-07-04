@@ -1,7 +1,7 @@
-package com.hyunbindev.article.image.adapter.`in`.command
+package com.hyunbindev.article.image.adapter.inbound.command
 
 import com.hyunbindev.article.image.port.inbound.ArticleImageManageUseCase
-import com.hyunbindev.article.image.adapter.out.ArticleImageRepository
+import com.hyunbindev.article.image.adapter.outbound.ArticleImageRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID

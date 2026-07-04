@@ -1,7 +1,7 @@
 package com.hyunbindev.article.comment.application.service.command
 
 import com.hyunbindev.article.article.port.usecase.inbound.ArticleQueryUseCase
-import com.hyunbindev.article.comment.adapter.out.CommentRepository
+import com.hyunbindev.article.comment.adapter.outbound.CommentRepository
 import com.hyunbindev.article.comment.domain.CommentEntity
 import com.hyunbindev.article.comment.port.inbound.ArticleCommentCreateUseCase
 import com.hyunbindev.article.global.exception.ArticleException

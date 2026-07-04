@@ -1,13 +1,11 @@
 package com.hyunbindev.article.comment.application.service.query
 
-import com.hyunbindev.article.comment.adapter.out.CommentCountProjection
-import com.hyunbindev.article.comment.adapter.out.CommentRepository
+import com.hyunbindev.article.comment.adapter.outbound.CommentCountProjection
+import com.hyunbindev.article.comment.adapter.outbound.CommentRepository
 import com.hyunbindev.article.comment.data.ArticleCommentDto
-import com.hyunbindev.article.comment.domain.CommentEntity
 import com.hyunbindev.article.comment.port.inbound.ArticleCommentQueryUseCase
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.LocalDateTime
 
 @Service
 internal class ArticleCommentQueryService(

@@ -1,4 +1,4 @@
-package com.hyunbindev.article.image.adapter.out
+package com.hyunbindev.article.image.adapter.outbound
 
 import java.io.InputStream
 

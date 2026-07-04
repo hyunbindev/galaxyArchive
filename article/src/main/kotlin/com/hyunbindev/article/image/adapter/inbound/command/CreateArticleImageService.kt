@@ -1,10 +1,10 @@
-package com.hyunbindev.article.image.adapter.`in`.command
+package com.hyunbindev.article.image.adapter.inbound.command
 
 import com.hyunbindev.article.image.port.inbound.CreateArticleImageUseCase
 import com.hyunbindev.article.image.data.ArticleImageDto
 import com.hyunbindev.article.image.domain.ArticleImageEntity
-import com.hyunbindev.article.image.adapter.out.ArticleImageUpload
-import com.hyunbindev.article.image.adapter.out.ArticleImageRepository
+import com.hyunbindev.article.image.adapter.outbound.ArticleImageUpload
+import com.hyunbindev.article.image.adapter.outbound.ArticleImageRepository
 import com.hyunbindev.article.global.exception.ArticleImageException
 import com.hyunbindev.article.global.exception.constant.ArticleImageExceptionCode
 import com.hyunbindev.common.image.ImageUploadMetadata

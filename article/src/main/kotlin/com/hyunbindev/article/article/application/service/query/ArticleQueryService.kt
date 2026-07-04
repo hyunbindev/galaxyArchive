@@ -7,7 +7,6 @@ import com.hyunbindev.article.article.adapter.outbound.ArticleSummary
 import com.hyunbindev.article.article.data.ArticleSummaryDto
 import com.hyunbindev.article.article.data.ArticleSummaryPageDto
 import com.hyunbindev.article.article.port.usecase.inbound.ArticleStatsQueryUseCase
-import com.hyunbindev.article.comment.adapter.out.CommentRepository
 import com.hyunbindev.article.comment.port.inbound.ArticleCommentQueryUseCase
 import com.hyunbindev.article.article.adapter.outbound.ArticleKeywordRepository
 import com.hyunbindev.article.global.exception.ArticleException

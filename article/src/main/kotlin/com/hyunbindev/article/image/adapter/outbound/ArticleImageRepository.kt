@@ -1,4 +1,4 @@
-package com.hyunbindev.article.image.adapter.out
+package com.hyunbindev.article.image.adapter.outbound
 
 import com.hyunbindev.article.image.domain.ArticleImageEntity
 import org.springframework.data.jpa.repository.JpaRepository

@@ -1,4 +1,4 @@
-package com.hyunbindev.article.comment.adapter.out
+package com.hyunbindev.article.comment.adapter.outbound
 
 import com.hyunbindev.article.comment.domain.CommentEntity
 import org.springframework.data.jpa.repository.JpaRepository

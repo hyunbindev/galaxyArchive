@@ -5,6 +5,7 @@ import com.hyunbindev.article.article.domain.ArticleEntity
 import com.hyunbindev.article.article.domain.ArticleStatus
 import com.hyunbindev.article.embedding.data.EmbeddingCompletedEvent
 import com.hyunbindev.article.embedding.port.event.inbound.ArticleEmbeddingCompleteEventHandler
+import com.hyunbindev.article.embedding.port.event.outbound.ClusterCreateEventPublishPort
 
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service
 @Service
 internal class AfterEmbeddingArticleService(
     private val articleRepository: ArticleRepository,
+    private val clusterCreateEventPublishPort: ClusterCreateEventPublishPort
 ): ArticleEmbeddingCompleteEventHandler {
 
     @Transactional
@@ -23,5 +25,7 @@ internal class AfterEmbeddingArticleService(
             "COMPLETED"->{article.status = ArticleStatus.COMPLETED}
             "FAILED"->{article.status = ArticleStatus.FAILED}
         }
+
+        clusterCreateEventPublishPort.publish(article.authorId)
     }
 }

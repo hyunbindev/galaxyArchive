@@ -7,6 +7,7 @@ import com.hyunbindev.user.data.UserInfoDto
 import com.hyunbindev.user.global.exception.UserException
 import com.hyunbindev.user.global.exception.constant.UserExceptionCode
 import com.hyunbindev.user.adapter.outbound.UserRepository
+
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -15,7 +16,7 @@ import java.util.UUID
 @Transactional(readOnly = true)
 internal class UserQueryService(
     private val userRepository: UserRepository,
-    private val userProfileRepository: UserProfileRepository
+    private val userProfileRepository: UserProfileRepository,
 ): UserQueryUseCase {
 
     override fun isUser(provider: OAuth2Provider, providerId: String): Boolean {
