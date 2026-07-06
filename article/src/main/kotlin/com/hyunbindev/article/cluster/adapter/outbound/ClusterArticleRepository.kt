@@ -1,7 +1,7 @@
 package com.hyunbindev.article.cluster.adapter.outbound
 
-import com.hyunbindev.article.cluster.domain.ClusterArticleEntity
-import com.hyunbindev.article.cluster.domain.UserClusterEntity
+import com.hyunbindev.article.cluster.domain.persist.ClusterArticleEntity
+import com.hyunbindev.article.cluster.domain.persist.UserClusterEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param

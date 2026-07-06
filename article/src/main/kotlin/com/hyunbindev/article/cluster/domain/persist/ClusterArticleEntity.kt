@@ -1,4 +1,4 @@
-package com.hyunbindev.article.cluster.domain
+package com.hyunbindev.article.cluster.domain.persist
 
 import com.hyunbindev.article.article.domain.ArticleEntity
 import jakarta.persistence.Column
