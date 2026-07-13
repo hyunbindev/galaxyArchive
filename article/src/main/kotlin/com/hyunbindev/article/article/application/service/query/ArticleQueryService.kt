@@ -20,6 +20,7 @@ internal class ArticleQueryService(
     private val articleRepository: ArticleRepository,
     private val commentQueryUseCase: ArticleCommentQueryUseCase,
     private val articleKeywordRepository: ArticleKeywordRepository,
+
 ): ArticleQueryUseCase, ArticleStatsQueryUseCase {
 
     @Transactional(readOnly = true)

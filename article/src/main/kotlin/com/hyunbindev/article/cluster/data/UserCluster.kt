@@ -6,4 +6,5 @@ data class UserCluster(
     val articleCount: Int,
     val isNoise: Boolean,
     val clusterArticles: List<ClusterArticle>,
+    val keywords: List<String>
 )

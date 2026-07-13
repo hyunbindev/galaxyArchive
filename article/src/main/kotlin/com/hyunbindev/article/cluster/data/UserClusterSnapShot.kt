@@ -10,5 +10,4 @@ data class UserClusterSnapShot(
     val clusters: List<UserCluster>,
     val clustersCount: Int,
     val articleCount: Int,
-    val keyWords: List<String> = emptyList(),
 )

@@ -1,11 +1,14 @@
 package com.hyunbindev.article.cluster.application.service.query
 
+import com.hyunbindev.article.article.data.ArticleKeywordDto
 import com.hyunbindev.article.cluster.data.ClusterArticle
 import com.hyunbindev.article.cluster.data.UserCluster
 import com.hyunbindev.article.cluster.data.UserClusterSnapShot
 import com.hyunbindev.article.cluster.domain.persist.ClusterArticleEntity
 import com.hyunbindev.article.cluster.domain.persist.UserClusterEntity
 import com.hyunbindev.article.cluster.domain.persist.UserClusterSnapshotEntity
+import com.hyunbindev.article.global.exception.ArticleException
+import com.hyunbindev.article.global.exception.constant.ArticleExceptionCode
 import org.springframework.stereotype.Component
 
 @Component
@@ -14,38 +17,86 @@ internal class ClusterGraphAssembler {
         snapshot: UserClusterSnapshotEntity,
         clusters: List<UserClusterEntity>,
         clusterArticles: List<ClusterArticleEntity>,
+        clusterKeyWords: List<ArticleKeywordDto>
     ): UserClusterSnapShot {
-        val articlesByClusterId = clusterArticles.groupBy { it.userCluster.id }
+        val snapshotId = snapshot.id?: throw ArticleException(ArticleExceptionCode.ARTICLE_INTERNAL_ERROR)
+
+        val userClusters = mapUserCluster(clusters,clusterArticles,clusterKeyWords)
 
         return UserClusterSnapShot(
-            snapshotId = snapshot.id!!,
+            snapshotId = snapshotId,
             userId = snapshot.userId,
             createdAt = snapshot.createdAt,
-            clusters = clusters
-                .sortedWith(compareBy<UserClusterEntity> { it.isNoise }.thenBy { it.label })
-                .map { cluster ->
-                    UserCluster(
-                        clusterId = cluster.id!!,
-                        label = cluster.label,
-                        articleCount = cluster.articleCount,
-                        isNoise = cluster.isNoise,
-                        clusterArticles = articlesByClusterId[cluster.id].orEmpty()
-                            .sortedBy { it.article.id }
-                            .map { clusterArticle ->
-                                ClusterArticle(
-                                    title = clusterArticle.article.title,
-                                    articleId = clusterArticle.article.id!!,
-                                    x = clusterArticle.x,
-                                    y = clusterArticle.y,
-                                    z = clusterArticle.z,
-                                    probability = clusterArticle.probability,
-                                    outlierScore = clusterArticle.outlierScore,
-                                )
-                            },
-                    )
-                },
-            clustersCount = snapshot.clusterCount,
+            clusters = userClusters,
+            clustersCount = clusters.size,
             articleCount = snapshot.articleCount,
         )
+    }
+
+    private fun mapUserCluster(
+        clusterEntities: List<UserClusterEntity>,
+        clusterArticles: List<ClusterArticleEntity>,
+        keywords: List<ArticleKeywordDto>,
+    ): List<UserCluster> {
+        val articlesByClusterId = clusterArticles.groupBy {
+            it.userCluster.id ?: throw ArticleException(ArticleExceptionCode.ARTICLE_INTERNAL_ERROR)
+        }
+
+        val keywordsByArticleId = mapKeywordsByArticleId(keywords)
+
+        return clusterEntities
+            .sortedWith(compareBy<UserClusterEntity> { it.isNoise }.thenBy { it.label })
+            .map { cluster ->
+                val clusterId = cluster.id
+                    ?: throw ArticleException(ArticleExceptionCode.ARTICLE_INTERNAL_ERROR)
+
+                val articlesInCluster = articlesByClusterId[clusterId].orEmpty()
+
+                val clusterKeywords = articlesInCluster
+                    .asSequence()
+                    .mapNotNull { it.article.id }
+                    .flatMap { articleId ->
+                        keywordsByArticleId[articleId].orEmpty().asSequence()
+                    }
+                    .distinct()
+                    .toList()
+
+                UserCluster(
+                    clusterId = clusterId,
+                    label = cluster.label,
+                    articleCount = cluster.articleCount,
+                    isNoise = cluster.isNoise,
+                    keywords = clusterKeywords,
+                    clusterArticles = mapArticleInCluster(articlesInCluster),
+                )
+            }
+    }
+
+    private fun mapArticleInCluster(clusterArticles: List<ClusterArticleEntity>): List<ClusterArticle> {
+        return clusterArticles
+            .sortedBy { it.article.id }
+            .map { clusterArticle ->
+                ClusterArticle(
+                    title = clusterArticle.article.title,
+                    articleId = clusterArticle.article.id!!,
+                    x = clusterArticle.x,
+                    y = clusterArticle.y,
+                    z = clusterArticle.z,
+                    probability = clusterArticle.probability,
+                    outlierScore = clusterArticle.outlierScore,
+                )
+            }
+    }
+
+    private fun mapKeywordsByArticleId(keywords:List<ArticleKeywordDto>):Map<Long,List<String>>{
+        val result = mutableMapOf<Long, MutableList<String>>()
+
+        for(keyword in keywords){
+            result
+                .getOrPut(keyword.articleId) { mutableListOf() }
+                .add(keyword.keyword)
+        }
+
+        return result
     }
 }
