@@ -16,6 +16,18 @@ interface ArticleRepository : JpaRepository<ArticleEntity, Long> {
     @Query("SELECT a FROM ArticleEntity a WHERE a.id=:id AND a.isDeleted = true")
     fun findArticleByIdWithDeleted(id: Long): ArticleEntity?
 
+    @Query("""
+        SELECT
+            article.id AS id,
+            article.title AS title,
+            LEFT(COALESCE(article.raw_text,''), :textLength) AS text,
+            article.created_at AS createdAt,
+            article.author_id AS authorId
+        FROM article_entity article 
+        WHERE article.id IN :ids 
+        AND article.is_deleted = false
+    """, nativeQuery = true)
+    fun findArticleByIdWithDeleted(ids: List<Long>, textLength: Int): List<ArticleSummary>
 
     @Query(
         value = """

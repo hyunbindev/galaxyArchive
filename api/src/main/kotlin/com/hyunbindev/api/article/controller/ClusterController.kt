@@ -1,5 +1,7 @@
 package com.hyunbindev.api.article.controller
 
+import com.hyunbindev.article.article.data.ArticleDto
+import com.hyunbindev.article.article.data.ArticleSummaryDto
 import com.hyunbindev.article.cluster.data.UserClusterSnapShot
 import com.hyunbindev.article.cluster.port.usecase.inbound.ClusterQueryUseCase
 import com.hyunbindev.common.auth.LoginUserId
@@ -17,5 +19,9 @@ class ClusterController(
     @GetMapping("/users/{userId}")
     fun getUserRecentCompletedCluster(@PathVariable userId: UUID): UserClusterSnapShot {
         return clusterQueryUseCase.getUserRecentCompletedCluster(userId)
+    }
+    @GetMapping("/{clusterId}")
+    fun getArticleInCluster(@PathVariable clusterId: Long): List<ArticleSummaryDto> {
+        return clusterQueryUseCase.getArticleInCluster(clusterId)
     }
 }

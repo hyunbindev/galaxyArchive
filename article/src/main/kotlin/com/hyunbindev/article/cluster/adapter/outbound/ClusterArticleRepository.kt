@@ -22,4 +22,14 @@ interface ClusterArticleRepository : JpaRepository<ClusterArticleEntity, Long> {
     fun findAllByUserClusterInFetchArticle(
         @Param("userClusters") userClusters: List<UserClusterEntity>,
     ): List<ClusterArticleEntity>
+
+    @Query(
+    """
+        SELECT ca
+        FROM ClusterArticleEntity ca
+        JOIN FETCH ca.article
+        WHERE ca.userCluster.id = :clusterId
+        """
+    )
+    fun findAllByUserClusterIdFetchArticle(clusterId: Long):List<ClusterArticleEntity>
 }

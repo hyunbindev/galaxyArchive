@@ -32,6 +32,17 @@ class ArticleDto {
                     keywords = keywordEntity.map{ it.keyword }
                 )
             }
+
+            fun fromWithKeyWordList(articleEntity: ArticleEntity, keywords: List<String>):Response{
+                return Response(
+                    id = articleEntity.id,
+                    title = articleEntity.title,
+                    text = articleEntity.text,
+                    authorId = articleEntity.authorId,
+                    createdAt = articleEntity.createdAt,
+                    keywords = keywords
+                )
+            }
         }
     }
 }

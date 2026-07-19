@@ -16,30 +16,37 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
 @Service
+@Transactional(readOnly = true)
 internal class ArticleQueryService(
     private val articleRepository: ArticleRepository,
     private val commentQueryUseCase: ArticleCommentQueryUseCase,
     private val articleKeywordRepository: ArticleKeywordRepository,
 
-): ArticleQueryUseCase, ArticleStatsQueryUseCase {
+    ) : ArticleQueryUseCase, ArticleStatsQueryUseCase {
 
-    @Transactional(readOnly = true)
-    override fun getArticle(id:Long): ArticleDto.Response{
-        val article = articleRepository.findArticleById(id)?:
-            throw ArticleException(ArticleExceptionCode.ARTICLE_NOT_FOUND)
+    override fun getArticle(id: Long): ArticleDto.Response {
+        val article =
+            articleRepository.findArticleById(id) ?: throw ArticleException(ArticleExceptionCode.ARTICLE_NOT_FOUND)
 
         val keywords = articleKeywordRepository.findAllByArticleOrderBySimilarityDesc(article)
 
-        return ArticleDto.Response.from(article,keywords)
+        return ArticleDto.Response.from(article, keywords)
     }
 
+    override fun getArticleSummaryPageByCursorAndAuthor(
+        authorId: UUID,
+        cursorArticleId: Long?,
+        size: Int
+    ): ArticleSummaryPageDto {
+        val articleSummary: List<ArticleSummary> = articleRepository
+            .findByArticleSummaryByUserIdByCursor(
+                authorId = authorId,
+                cursorId = cursorArticleId,
+                size = size + 1,
+                textLength = 100
+            )
 
-    @Transactional(readOnly = true)
-    override fun getArticleSummaryPageByCursorAndAuthor(authorId: UUID, cursorArticleId: Long?, size: Int): ArticleSummaryPageDto {
-        val articleSummary:List<ArticleSummary> = articleRepository
-            .findByArticleSummaryByUserIdByCursor(authorId = authorId, cursorId = cursorArticleId , size = size+1 , textLength = 100)
-
-        val commentsCountMap:Map<Long,Int> = commentQueryUseCase
+        val commentsCountMap: Map<Long, Int> = commentQueryUseCase
             .getCommentCountByArticleIds(articleSummary.map { it.id })
 
         val hasNextPage = articleSummary.size > size
@@ -48,10 +55,11 @@ internal class ArticleQueryService(
 
         val keywordEntities = articleKeywordRepository.findAllByArticleIdInOrderBySimilarityDesc(articleIds)
 
-        val keywordMap: Map<Long, List<String>> = keywordEntities.groupBy(keySelector = { it.article.id!! },valueTransform = { it.keyword })
+        val keywordMap: Map<Long, List<String>> =
+            keywordEntities.groupBy(keySelector = { it.article.id!! }, valueTransform = { it.keyword })
 
         val articleSummaryDtoList = articleSummary.take(size)
-            .map { ArticleSummaryDto.from(it,commentsCountMap[it.id],keywordMap[it.id]?:emptyList()) }
+            .map { ArticleSummaryDto.from(it, commentsCountMap[it.id], keywordMap[it.id] ?: emptyList()) }
 
         return ArticleSummaryPageDto(
             articles = articleSummaryDtoList,
@@ -61,9 +69,31 @@ internal class ArticleQueryService(
         )
     }
 
-    @Transactional(readOnly = true)
+    override fun getArticleSummaryByIds(articleIds: List<Long>): List<ArticleSummaryDto> {
+
+        val articleSummary: List<ArticleSummary> = articleRepository
+            .findArticleByIdWithDeleted(articleIds, 100)
+
+        val keywordEntities = articleKeywordRepository.findAllByArticleIdInOrderBySimilarityDesc(articleIds)
+
+        val keywordMap: Map<Long, List<String>> =
+            keywordEntities.groupBy(keySelector = { it.article.id!! }, valueTransform = { it.keyword })
+
+        val commentsCountMap: Map<Long, Int> = commentQueryUseCase
+            .getCommentCountByArticleIds(articleSummary.map { it.id })
+
+        return articleSummary
+            .map {
+                ArticleSummaryDto.from(
+                    it,
+                    commentsCountMap[it.id],
+                    keywordMap[it.id] ?: emptyList()
+                )
+            }
+    }
+
     override fun getArticleCountByAuthorId(authorId: UUID): Int = articleRepository.countByAuthorId(authorId)
 
-    @Transactional(readOnly = true)
-    override fun isArticleExist(id:Long):Boolean = articleRepository.existsById(id)
+
+    override fun isArticleExist(id: Long): Boolean = articleRepository.existsById(id)
 }
