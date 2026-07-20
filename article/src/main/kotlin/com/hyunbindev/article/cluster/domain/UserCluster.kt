@@ -1,4 +1,6 @@
-package com.hyunbindev.article.cluster.data
+package com.hyunbindev.article.cluster.domain
+
+import com.hyunbindev.article.cluster.data.ClusterKeywordDto
 
 data class UserCluster(
     val clusterId: Long,

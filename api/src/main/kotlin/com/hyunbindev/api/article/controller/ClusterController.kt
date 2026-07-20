@@ -2,7 +2,7 @@ package com.hyunbindev.api.article.controller
 
 import com.hyunbindev.article.article.data.ArticleDto
 import com.hyunbindev.article.article.data.ArticleSummaryDto
-import com.hyunbindev.article.cluster.data.UserClusterSnapShot
+import com.hyunbindev.article.cluster.domain.UserClusterSnapShot
 import com.hyunbindev.article.cluster.port.usecase.inbound.ClusterQueryUseCase
 import com.hyunbindev.common.auth.LoginUserId
 import org.springframework.web.bind.annotation.GetMapping

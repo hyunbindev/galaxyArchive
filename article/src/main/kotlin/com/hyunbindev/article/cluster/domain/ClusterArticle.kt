@@ -1,4 +1,4 @@
-package com.hyunbindev.article.cluster.data
+package com.hyunbindev.article.cluster.domain
 
 data class ClusterArticle(
     val title: String,

@@ -11,7 +11,7 @@ import com.hyunbindev.article.cluster.adapter.outbound.ClusterArticleRepository
 import com.hyunbindev.article.cluster.adapter.outbound.UserClusterRepository
 import com.hyunbindev.article.cluster.adapter.outbound.UserClusterSnapshotRepository
 import com.hyunbindev.article.cluster.data.ClusterKeywordDto
-import com.hyunbindev.article.cluster.data.UserClusterSnapShot
+import com.hyunbindev.article.cluster.domain.UserClusterSnapShot
 import com.hyunbindev.article.cluster.domain.persist.ClusterArticleEntity
 import com.hyunbindev.article.cluster.domain.persist.ClusterSnapshotStatus
 import com.hyunbindev.article.cluster.port.usecase.inbound.ClusterQueryUseCase

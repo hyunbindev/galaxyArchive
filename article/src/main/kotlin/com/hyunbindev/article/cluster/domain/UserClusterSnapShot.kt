@@ -1,4 +1,4 @@
-package com.hyunbindev.article.cluster.data
+package com.hyunbindev.article.cluster.domain
 
 import java.time.LocalDateTime
 import java.util.UUID

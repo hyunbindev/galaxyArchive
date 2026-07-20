@@ -1,10 +1,9 @@
 package com.hyunbindev.article.cluster.application.service.query
 
-import com.hyunbindev.article.article.data.ArticleKeywordDto
-import com.hyunbindev.article.cluster.data.ClusterArticle
+import com.hyunbindev.article.cluster.domain.ClusterArticle
 import com.hyunbindev.article.cluster.data.ClusterKeywordDto
-import com.hyunbindev.article.cluster.data.UserCluster
-import com.hyunbindev.article.cluster.data.UserClusterSnapShot
+import com.hyunbindev.article.cluster.domain.UserCluster
+import com.hyunbindev.article.cluster.domain.UserClusterSnapShot
 import com.hyunbindev.article.cluster.domain.persist.ClusterArticleEntity
 import com.hyunbindev.article.cluster.domain.persist.UserClusterEntity
 import com.hyunbindev.article.cluster.domain.persist.UserClusterSnapshotEntity
