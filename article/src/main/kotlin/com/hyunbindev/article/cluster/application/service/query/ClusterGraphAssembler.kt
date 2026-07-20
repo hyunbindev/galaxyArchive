@@ -2,6 +2,7 @@ package com.hyunbindev.article.cluster.application.service.query
 
 import com.hyunbindev.article.article.data.ArticleKeywordDto
 import com.hyunbindev.article.cluster.data.ClusterArticle
+import com.hyunbindev.article.cluster.data.ClusterKeywordDto
 import com.hyunbindev.article.cluster.data.UserCluster
 import com.hyunbindev.article.cluster.data.UserClusterSnapShot
 import com.hyunbindev.article.cluster.domain.persist.ClusterArticleEntity
@@ -17,11 +18,11 @@ internal class ClusterGraphAssembler {
         snapshot: UserClusterSnapshotEntity,
         clusters: List<UserClusterEntity>,
         clusterArticles: List<ClusterArticleEntity>,
-        clusterKeyWords: List<ArticleKeywordDto>
+        clusterKeyWords: List<ClusterKeywordDto>
     ): UserClusterSnapShot {
         val snapshotId = snapshot.id?: throw ArticleException(ArticleExceptionCode.ARTICLE_INTERNAL_ERROR)
 
-        val userClusters = mapUserCluster(clusters,clusterArticles,clusterKeyWords)
+        val userClusters = mapUserCluster(clusters, clusterArticles, clusterKeyWords)
 
         return UserClusterSnapShot(
             snapshotId = snapshotId,
@@ -36,13 +37,11 @@ internal class ClusterGraphAssembler {
     private fun mapUserCluster(
         clusterEntities: List<UserClusterEntity>,
         clusterArticles: List<ClusterArticleEntity>,
-        keywords: List<ArticleKeywordDto>,
+        keywords: List<ClusterKeywordDto>,
     ): List<UserCluster> {
         val articlesByClusterId = clusterArticles.groupBy {
             it.userCluster.id ?: throw ArticleException(ArticleExceptionCode.ARTICLE_INTERNAL_ERROR)
         }
-
-        val keywordsByArticleId = mapKeywordsByArticleId(keywords)
 
         return clusterEntities
             .sortedWith(compareBy<UserClusterEntity> { it.isNoise }.thenBy { it.label })
@@ -52,21 +51,14 @@ internal class ClusterGraphAssembler {
 
                 val articlesInCluster = articlesByClusterId[clusterId].orEmpty()
 
-                val clusterKeywords = articlesInCluster
-                    .asSequence()
-                    .mapNotNull { it.article.id }
-                    .flatMap { articleId ->
-                        keywordsByArticleId[articleId].orEmpty().asSequence()
-                    }
-                    .distinct()
-                    .toList()
+                val keywordMap:Map<Long,List<ClusterKeywordDto>> = keywords.groupBy { it.clusterId }
 
                 UserCluster(
                     clusterId = clusterId,
                     label = cluster.label,
                     articleCount = cluster.articleCount,
                     isNoise = cluster.isNoise,
-                    keywords = clusterKeywords,
+                    keywords = keywordMap[clusterId].orEmpty(),
                     clusterArticles = mapArticleInCluster(articlesInCluster),
                 )
             }
@@ -86,17 +78,5 @@ internal class ClusterGraphAssembler {
                     outlierScore = clusterArticle.outlierScore,
                 )
             }
-    }
-
-    private fun mapKeywordsByArticleId(keywords:List<ArticleKeywordDto>):Map<Long,List<String>>{
-        val result = mutableMapOf<Long, MutableList<String>>()
-
-        for(keyword in keywords){
-            result
-                .getOrPut(keyword.articleId) { mutableListOf() }
-                .add(keyword.keyword)
-        }
-
-        return result
     }
 }

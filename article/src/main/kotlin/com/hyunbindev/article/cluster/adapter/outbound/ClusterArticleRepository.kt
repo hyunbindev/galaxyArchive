@@ -29,6 +29,7 @@ interface ClusterArticleRepository : JpaRepository<ClusterArticleEntity, Long> {
         FROM ClusterArticleEntity ca
         JOIN FETCH ca.article
         WHERE ca.userCluster.id = :clusterId
+        ORDER BY ca.article.createdAt DESC
         """
     )
     fun findAllByUserClusterIdFetchArticle(clusterId: Long):List<ClusterArticleEntity>

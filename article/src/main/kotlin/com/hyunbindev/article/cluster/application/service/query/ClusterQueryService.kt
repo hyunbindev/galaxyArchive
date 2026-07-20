@@ -10,6 +10,7 @@ import com.hyunbindev.article.article.port.usecase.inbound.ArticleQueryUseCase
 import com.hyunbindev.article.cluster.adapter.outbound.ClusterArticleRepository
 import com.hyunbindev.article.cluster.adapter.outbound.UserClusterRepository
 import com.hyunbindev.article.cluster.adapter.outbound.UserClusterSnapshotRepository
+import com.hyunbindev.article.cluster.data.ClusterKeywordDto
 import com.hyunbindev.article.cluster.data.UserClusterSnapShot
 import com.hyunbindev.article.cluster.domain.persist.ClusterArticleEntity
 import com.hyunbindev.article.cluster.domain.persist.ClusterSnapshotStatus
@@ -40,12 +41,13 @@ internal class ClusterQueryService(
             ClusterSnapshotStatus.COMPLETED
         ) ?: throw ArticleException(ClusterExceptionCode.NO_USER_CLUSTER)
 
+
         val clusters = userClusterRepository.findAllBySnapshot(snapshot)
         val clusterArticles = clusterArticleRepository.findAllByUserClusterInFetchArticle(clusters)
+        val snapshotId = snapshot.id
+            ?: throw ArticleException(ClusterExceptionCode.NO_USER_CLUSTER)
 
-        val articleIds: List<Long> = clusterArticles.mapNotNull{ it.article.id }.toList()
-
-        val keywords: List<ArticleKeywordDto> = articleKeywordQueryUseCase.getKeywordsByArticleIds(articleIds)
+        val keywords: List<ClusterKeywordDto> = userClusterRepository.findKeyWordBySnapShotIdWithClusterGroup(snapshotId)
 
         return clusterGraphAssembler.assemble(
             snapshot = snapshot,

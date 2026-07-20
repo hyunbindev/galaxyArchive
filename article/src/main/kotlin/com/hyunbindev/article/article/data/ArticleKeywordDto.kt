@@ -15,7 +15,7 @@ data class ArticleKeywordDto(
 
         fun from(entity: ArticleKeyWordEntity):ArticleKeywordDto{
             val articleId:Long = entity.article.id
-                ?:throw ArticleException(ArticleExceptionCode.ARTICLE_INTERNAL_ERROR,"not persisted article Entity")
+                ?:throw ArticleException(ArticleExceptionCode.ARTICLE_INTERNAL_ERROR, "not persisted article Entity")
             return ArticleKeywordDto(articleId, entity.keyword, entity.similarity)
         }
 
