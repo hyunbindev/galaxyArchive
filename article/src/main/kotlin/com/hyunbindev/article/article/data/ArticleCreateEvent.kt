@@ -10,8 +10,6 @@ data class ArticleCreateEvent(
     val authorId: UUID,
     val traceId:String = UUID.randomUUID().toString(),
     val imageUuids: List<UUID>,
-    val title:String,
-    val rawText: String,
     @field:JsonFormat(
         shape = JsonFormat.Shape.STRING,
         pattern = "yyyy-MM-dd'T'HH:mm:ss",
@@ -26,8 +24,6 @@ data class ArticleCreateEvent(
                 articleId = id,
                 authorId = article.authorId,
                 imageUuids = imageUuids,
-                title = article.title,
-                rawText = article.rawText,
             )
         }
     }

@@ -25,8 +25,8 @@ internal class ArticleQueryService(
     ) : ArticleQueryUseCase, ArticleStatsQueryUseCase {
 
     override fun getArticle(id: Long): ArticleDto.Response {
-        val article =
-            articleRepository.findArticleById(id) ?: throw ArticleException(ArticleExceptionCode.ARTICLE_NOT_FOUND)
+        val article = articleRepository.findArticleById(id)
+            ?: throw ArticleException(ArticleExceptionCode.ARTICLE_NOT_FOUND)
 
         val keywords = articleKeywordRepository.findAllByArticleOrderBySimilarityDesc(article)
 
@@ -93,7 +93,6 @@ internal class ArticleQueryService(
     }
 
     override fun getArticleCountByAuthorId(authorId: UUID): Int = articleRepository.countByAuthorId(authorId)
-
 
     override fun isArticleExist(id: Long): Boolean = articleRepository.existsById(id)
 }
