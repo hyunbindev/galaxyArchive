@@ -13,7 +13,7 @@ internal class OAuth2UserProvider : UserProviderUseCase {
     override fun getLoginUserId(): UUID {
 
         val authentication = SecurityContextHolder.getContext().authentication
-            ?:throw AuthException(AuthExceptionCode.USER_UNAUTHORIZED)
+            ?: throw AuthException(AuthExceptionCode.USER_UNAUTHORIZED)
 
         val principal = authentication.principal as? OAuth2UserPrincipal
             ?: throw AuthException(AuthExceptionCode.OAUTH2_AUTHENTICATION_FAILED)

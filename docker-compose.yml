@@ -74,7 +74,12 @@ services:
       - ./volumes/minio_data:/data
     command: server /data --console-address ":9001"
     restart: always
-
+  #redis
+  redis:
+    image: redis:8
+    container_name: galaxy-redis
+    ports:
+      - "6379:6379"
 networks:
   galaxy-network:
     name: galaxy-network

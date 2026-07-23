@@ -5,6 +5,7 @@ import com.hyunbindev.common.constant.oauth2.OAuth2Provider.*
 import com.hyunbindev.user.data.UserInfoDto
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.oauth2.core.user.OAuth2User
+import java.io.Serializable
 import java.util.UUID
 
 /**
@@ -30,7 +31,7 @@ class OAuth2UserPrincipalImpl(
     override val provider: OAuth2Provider,
     private val attributes: Map<String, Any>,
     private val authorities: Collection<GrantedAuthority> = emptyList()
-) : OAuth2User, OAuth2UserPrincipal {
+) : OAuth2User, OAuth2UserPrincipal, Serializable {
 
     /**
      * @return 소셜 서비스에서 제공하는 모든 속성 정보

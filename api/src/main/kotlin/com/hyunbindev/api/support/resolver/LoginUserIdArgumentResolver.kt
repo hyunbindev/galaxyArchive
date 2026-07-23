@@ -1,6 +1,8 @@
 package com.hyunbindev.api.support.resolver
 
 import com.hyunbindev.auth.application.port.UserProviderUseCase
+import com.hyunbindev.auth.exception.AuthException
+import com.hyunbindev.auth.exception.constant.AuthExceptionCode
 import com.hyunbindev.common.auth.LoginUserId
 import org.springframework.core.MethodParameter
 import org.springframework.stereotype.Component
@@ -24,7 +26,17 @@ class LoginUserIdArgumentResolver(
         mavContainer: ModelAndViewContainer?,
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
-    ): Any? {
-        return userProvider.getLoginUserId()
+    ): UUID? {
+        val annotation = parameter.getParameterAnnotation(LoginUserId::class.java)
+            ?:throw Exception("@LoginUserId annotation is required")
+
+        val userId = userProvider.getLoginUserId()
+
+        return if (annotation.required) {
+            userId ?: throw AuthException(AuthExceptionCode.USER_UNAUTHORIZED)
+
+        } else {
+            userId
+        }
     }
 }

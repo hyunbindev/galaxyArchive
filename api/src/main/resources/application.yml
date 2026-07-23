@@ -2,13 +2,19 @@ server:
   servlet:
     session:
       timeout: 4h
+      cookie:
+        name: GAL_AUT
+
 
 spring:
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:dev}
-
   application:
     name: 'api'
+  session:
+    store-type: redis
+    redis:
+      namespace: 'galaxyarchive:session'
 
   security:
     oauth2:
